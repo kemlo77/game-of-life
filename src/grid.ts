@@ -50,6 +50,11 @@ export class Grid {
         });
     }
 
+    evolve(): void {
+        this.allCells().forEach(cell => cell.planFate());
+        this.allCells().forEach(cell => cell.executeFate());
+    }
+
 
 
 

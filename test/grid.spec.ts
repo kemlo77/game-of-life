@@ -59,5 +59,24 @@ describe('grid', () => {
         expect(grid.cellAt(3, 2).y).to.equal(2);
     });
 
+    it('blinker blinks', () => {
+        const grid: Grid = new Grid(5, 5);
+        grid.cellAt(2, 1).live();
+        grid.cellAt(2, 2).live();
+        grid.cellAt(2, 3).live();
+        grid.evolve();
+        expect(grid.cellAt(1, 2).isAlive).to.be.true;
+        expect(grid.cellAt(2, 2).isAlive).to.be.true;
+        expect(grid.cellAt(3, 2).isAlive).to.be.true;
+        expect(grid.allCells().filter(cell => cell.isAlive).length).to.equal(3);
+        grid.evolve();
+        expect(grid.cellAt(2, 1).isAlive).to.be.true;
+        expect(grid.cellAt(2, 2).isAlive).to.be.true;
+        expect(grid.cellAt(2, 3).isAlive).to.be.true;
+        expect(grid.allCells().filter(cell => cell.isAlive).length).to.equal(3);
+    });
+
+
+
 
 });
