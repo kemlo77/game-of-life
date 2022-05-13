@@ -2,18 +2,23 @@ export class Cell {
 
     private _neighbours: Cell[] = [];
     private _age = 0;
-    private killMe: () => void = () => this.die();
-    private doNothing: () => void = () => { return; };
-    private reviveMe: () => void = () => this.live();
-    private _plannedFate: () => void = this.doNothing;
+    private _x = 0;
+    private _y = 0;
+    private _killMe: () => void = () => this.die();
+    private _doNothing: () => void = () => { return; };
+    private _reviveMe: () => void = () => this.live();
+    private _plannedFate: () => void = this._doNothing;
 
-    private constructor(age: number) { this._age = age; }
-
-    static livingCell(): Cell { return new Cell(1); }
-
-    static deadCell(): Cell { return new Cell(0); }
+    constructor(x: number, y: number) {
+        this._x = x;
+        this._y = y;
+    }
 
     get age(): number { return this._age; }
+
+    get x(): number { return this._x; }
+
+    get y(): number { return this._y; }
 
     addNeighbour(cell: Cell): void { this._neighbours.push(cell); }
 
@@ -30,20 +35,19 @@ export class Cell {
     get livingNeighbours(): number { return this._neighbours.filter(cell => cell.isAlive).length; }
 
     planFate(): void {
-        if (this.isAlive && (this.livingNeighbours < 2 || this.livingNeighbours > 3)) {
-            this._plannedFate = this.killMe;
+        if (this.isAlive && (this.livingNeighbours !== 2 && this.livingNeighbours !== 3)) {
+            this._plannedFate = this._killMe;
             return;
         }
 
         if (this.isDead && this.livingNeighbours == 3) {
-            this._plannedFate = this.reviveMe;
+            this._plannedFate = this._reviveMe;
             return;
         }
-
     }
 
     executeFate(): void {
         this._plannedFate();
-        this._plannedFate = this.doNothing;
+        this._plannedFate = this._doNothing;
     }
 }

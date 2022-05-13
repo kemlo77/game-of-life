@@ -6,6 +6,7 @@ export class Grid {
 
     constructor(width: number, height: number) {
         this._grid = this.generateColumnOfRowOfCells(width, height);
+        this.connectCellsWithNeighbours();
     }
 
     get width(): number {
@@ -17,17 +18,41 @@ export class Grid {
     }
 
     cellAt(x: number, y: number): Cell {
-        return this._grid[x][y];
+        return this._grid[y][x];
+    }
+
+    allCells(): Cell[] {
+        return this._grid.flat();
     }
 
     private generateColumnOfRowOfCells(width: number, height: number): Cell[][] {
-        return Array(height).fill(0).map(() => this.generateRowOfCells(width));
+        const columnOfRows: Cell[][] = [];
+        for (let y: number = 0; y < height; y++) {
+            const row: Cell[] = [];
+            for (let x: number = 0; x < width; x++) {
+                row.push(new Cell(x, y));
+            }
+            columnOfRows.push(row);
+        }
+        return columnOfRows;
     }
 
-    private generateRowOfCells(width: number): Cell[] {
-        return Array(width).fill(0).map(() => Cell.deadCell());
 
+    private connectCellsWithNeighbours(): void {
+        this.allCells().forEach(currentCell => {
+
+            this.allCells()
+                .filter(cell => cell !== currentCell)
+                .filter(cell => Math.abs(currentCell.x - cell.x) <= 1)
+                .filter(cell => Math.abs(currentCell.y - cell.y) <= 1)
+                .forEach(cell => currentCell.addNeighbour(cell));
+
+        });
     }
+
+
+
+
 
 
 }

@@ -46,6 +46,7 @@
         ],
         "prefer-const": "error",
         "no-array-constructor": "error",
+        "@typescript-eslint/no-inferrable-types": 0,
         "@typescript-eslint/typedef": [
             "error",
             {
