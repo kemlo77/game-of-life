@@ -1,2 +1,1 @@
-# game-of-life
-Game of Life
+# typescript-browser-development-setup
