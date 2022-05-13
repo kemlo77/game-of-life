@@ -12,7 +12,7 @@
     "cypress:open": "npx cypress open",
     "cypress:run": "npx cypress run",
     "coverage": "nyc npm run test",
-    "coverageSpecificTest": "nyc mocha test/**/difficult.spec.ts",
+    "coverageSpecificTest": "nyc mocha test/**/grid.spec.ts",
     "sonar": "node sonar-project.js"
   },
   "author": "",
