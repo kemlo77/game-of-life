@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { Grid } from '../src/grid';
-import { Cell } from '../src/cell';
+import { Grid } from '../../src/model/grid';
+import { Cell } from '../../src/model/cell';
 
 describe('grid', () => {
 

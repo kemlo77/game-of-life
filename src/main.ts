@@ -1,35 +1,62 @@
 import './style.css';
-import { Grid } from './grid';
-import { Cell } from './cell';
+import { Grid } from './model/grid';
+import { View } from './view/view';
+import { ClassicView } from './view/classicview';
+import { RainbowColoredView } from './view/rainbowcoloredview';
+import { AgedView } from './view/agedview';
+
+
+const grid: Grid = new Grid(40, 40);
+
+//Glider
+grid.cellAt(15, 1).live();
+grid.cellAt(15, 2).live();
+grid.cellAt(15, 3).live();
+grid.cellAt(16, 3).live();
+grid.cellAt(17, 2).live();
+
+//Toad
+grid.cellAt(4, 3).live();
+grid.cellAt(5, 3).live();
+grid.cellAt(6, 3).live();
+grid.cellAt(5, 4).live();
+grid.cellAt(6, 4).live();
+grid.cellAt(7, 4).live();
+
+//corner
+grid.cellAt(0, 0).live();
+grid.cellAt(39, 39).live();
+
+//acorn
+grid.cellAt(24, 24).live();
+grid.cellAt(25, 24).live();
+grid.cellAt(28, 24).live();
+grid.cellAt(29, 24).live();
+grid.cellAt(30, 24).live();
+grid.cellAt(27, 23).live();
+grid.cellAt(25, 22).live();
+
+
+//const view: View = new ClassicView();
+const view: View = new RainbowColoredView();
+//const view: View = new AgedView();
 
 function myFunction(): void {
-    const inputElement: HTMLInputElement = (document.getElementById('textInput') as HTMLInputElement);
-    const inputText: string = inputElement.value;
 
-    inputElement.value = "hoho";
-    const grid: Grid = new Grid(10, 10);
-    const cell1: Cell = new Cell(0, 1);
+    view.clearTheCanvas();
+    //view.clearTheCanvas();
 
-    const nb1: Cell = new Cell(0, 1);
-    nb1.live();
-    cell1.addNeighbour(nb1);
 
-    const nb2: Cell = new Cell(0, 1);
-    nb2.live();
-    cell1.addNeighbour(nb2);
+    view.plotLivingCells(grid.allCells());
+    grid.evolve();
 
-    const nb3: Cell = new Cell(0, 1);
-    nb3.live();
-    //cell1.addNeighbour(nb3);
+    //view.plotConnections(grid.cellAt(18, 18));
 
-    const nb4: Cell = new Cell(0, 1);
-    nb4.live();
-    //cell1.addNeighbour(nb4);
 
-    cell1.planFate();
-    cell1.executeFate();
-    console.log("cell1 is alive: " + cell1.isAlive);
+
+
+
 
 }
 
-document.getElementById('reverseButton').addEventListener('click', () => myFunction());
+document.getElementById('evolveButton').addEventListener('click', () => myFunction());

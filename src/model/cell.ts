@@ -7,6 +7,7 @@ export class Cell {
     private _killMe: () => void = () => this.die();
     private _doNothing: () => void = () => { return; };
     private _reviveMe: () => void = () => this.live();
+    private _continueLiving: () => void = () => this.live();
     private _plannedFate: () => void = this._doNothing;
 
     constructor(x: number, y: number) {
@@ -22,6 +23,10 @@ export class Cell {
 
     addNeighbour(cell: Cell): void { this._neighbours.push(cell); }
 
+    get neigbours(): Cell[] {
+        return this._neighbours;
+    }
+
     get numberOfNeighbours(): number { return this._neighbours.length; }
 
     get isAlive(): boolean { return this._age > 0; }
@@ -35,10 +40,16 @@ export class Cell {
     get livingNeighbours(): number { return this._neighbours.filter(cell => cell.isAlive).length; }
 
     planFate(): void {
-        if (this.isAlive && (this.livingNeighbours !== 2 && this.livingNeighbours !== 3)) {
-            this._plannedFate = this._killMe;
-            return;
+        if (this.isAlive) {
+            if (this.livingNeighbours !== 2 && this.livingNeighbours !== 3) {
+                this._plannedFate = this._killMe;
+                return;
+            } else {
+                this._plannedFate = this._continueLiving;
+                return;
+            }
         }
+
 
         if (this.isDead && this.livingNeighbours == 3) {
             this._plannedFate = this._reviveMe;

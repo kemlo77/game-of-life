@@ -1,6 +1,6 @@
 
 import { expect } from 'chai';
-import { Cell } from '../src/cell';
+import { Cell } from '../../src/model/cell';
 
 function newLiveCell(): Cell {
     const cell: Cell = new Cell(0, 1);
