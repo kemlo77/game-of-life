@@ -64,7 +64,32 @@ describe('cells', () => {
         cell.addNeighbour(newLiveCell());
         cell.addNeighbour(newLiveCell());
         cell.addNeighbour(newDeadCell());
-        expect(cell.livingNeighbours).to.equal(2);
+        expect(cell.numberOfLivingNeighbours).to.equal(2);
+    });
+
+    it('cell has dead neighbours', () => {
+        const cell: Cell = new Cell(0, 1);
+        cell.addNeighbour(newLiveCell());
+        cell.addNeighbour(newLiveCell());
+        cell.addNeighbour(newDeadCell());
+        cell.addNeighbour(newDeadCell());
+        cell.addNeighbour(newDeadCell());
+        expect(cell.deadNeighbours.length).to.equal(3);
+        expect(cell.deadNeighbours[0].isDead).to.equal(true);
+        expect(cell.deadNeighbours[1].isDead).to.equal(true);
+        expect(cell.deadNeighbours[2].isDead).to.equal(true);
+    });
+
+    it('cell has living neighbours', () => {
+        const cell: Cell = new Cell(0, 1);
+        cell.addNeighbour(newLiveCell());
+        cell.addNeighbour(newLiveCell());
+        cell.addNeighbour(newLiveCell());
+        cell.addNeighbour(newDeadCell());
+        expect(cell.livingNeighbours.length).to.equal(3);
+        expect(cell.livingNeighbours[0].isAlive).to.equal(true);
+        expect(cell.livingNeighbours[1].isAlive).to.equal(true);
+        expect(cell.livingNeighbours[2].isAlive).to.equal(true);
     });
 
     describe('living cell with', () => {
@@ -72,7 +97,7 @@ describe('cells', () => {
             const cell: Cell = newLiveCell();
             cell.addNeighbour(newLiveCell());
             cell.addNeighbour(newDeadCell());
-            expect(cell.livingNeighbours).to.equal(1);
+            expect(cell.numberOfLivingNeighbours).to.equal(1);
             cell.planFate();
             cell.executeFate();
             expect(cell.isAlive).to.be.false;
@@ -83,7 +108,7 @@ describe('cells', () => {
             cell.addNeighbour(newLiveCell());
             cell.addNeighbour(newLiveCell());
             cell.addNeighbour(newDeadCell());
-            expect(cell.livingNeighbours).to.equal(2);
+            expect(cell.numberOfLivingNeighbours).to.equal(2);
             cell.planFate();
             cell.executeFate();
             expect(cell.isAlive).to.be.true;
@@ -95,7 +120,7 @@ describe('cells', () => {
             cell.addNeighbour(newLiveCell());
             cell.addNeighbour(newLiveCell());
             cell.addNeighbour(newDeadCell());
-            expect(cell.livingNeighbours).to.equal(3);
+            expect(cell.numberOfLivingNeighbours).to.equal(3);
             cell.planFate();
             cell.executeFate();
             expect(cell.isAlive).to.be.true;
@@ -108,7 +133,7 @@ describe('cells', () => {
             cell.addNeighbour(newLiveCell());
             cell.addNeighbour(newLiveCell());
             cell.addNeighbour(newDeadCell());
-            expect(cell.livingNeighbours).to.equal(4);
+            expect(cell.numberOfLivingNeighbours).to.equal(4);
             cell.planFate();
             cell.executeFate();
             expect(cell.isAlive).to.be.false;

@@ -29,6 +29,11 @@ export class Cell {
 
     get numberOfNeighbours(): number { return this._neighbours.length; }
 
+    get numberOfLivingNeighbours(): number { return this._neighbours.filter(cell => cell.isAlive).length; }
+
+    get deadNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isDead); }
+    get livingNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isAlive); }
+
     get isAlive(): boolean { return this._age > 0; }
 
     get isDead(): boolean { return this._age == 0; }
@@ -37,11 +42,9 @@ export class Cell {
 
     die(): void { this._age = 0; }
 
-    get livingNeighbours(): number { return this._neighbours.filter(cell => cell.isAlive).length; }
-
     planFate(): void {
         if (this.isAlive) {
-            if (this.livingNeighbours !== 2 && this.livingNeighbours !== 3) {
+            if (this.numberOfLivingNeighbours !== 2 && this.numberOfLivingNeighbours !== 3) {
                 this._plannedFate = this._killMe;
                 return;
             } else {
@@ -51,7 +54,7 @@ export class Cell {
         }
 
 
-        if (this.isDead && this.livingNeighbours == 3) {
+        if (this.isDead && this.numberOfLivingNeighbours == 3) {
             this._plannedFate = this._reviveMe;
             return;
         }

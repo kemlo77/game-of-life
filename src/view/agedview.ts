@@ -30,9 +30,9 @@ export class AgedView extends View {
 
             this.canvasCtx.beginPath(); //varför måste jag ha med detta för att färgändring ska slå igenom
             this.canvasCtx.stroke();    // dito
-            const squareWidth: number = this.width - 2;
-            const xAdjusted: number = this.width / 2 + cell.x * this.width;
-            const yAdjusted: number = this.width / 2 + cell.y * this.width;
+            const squareWidth: number = this.gridCellWidth - 2;
+            const xAdjusted: number = this.gridCellWidth / 2 + cell.x * this.gridCellWidth;
+            const yAdjusted: number = this.gridCellWidth / 2 + cell.y * this.gridCellWidth;
             this.canvasCtx.rect(xAdjusted - squareWidth / 2, yAdjusted - squareWidth / 2, squareWidth, squareWidth);
             this.canvasCtx.fill();
         });
