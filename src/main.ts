@@ -1,16 +1,12 @@
 import './style.css';
 import { Grid } from './model/grid';
 import { View } from './view/view';
-import { ClassicView } from './view/classicview';
-import { RainbowColoredView } from './view/rainbowcoloredview';
-import { AgedView } from './view/agedview';
-import { RoundedView } from './view/roundedview';
-import { CircleView } from './view/circleview';
-import { RoundedViewOld } from './view/roundedviewold';
+import { CellPainterProvider } from './view/cellpainters/cellpainterprovider';
+
 
 
 const grid: Grid = new Grid(50, 45);
-let view: View = new ClassicView();
+const view: View = new View();
 
 //Glider
 grid.cellAt(15, 1).live();
@@ -41,50 +37,23 @@ grid.cellAt(27, 23).live();
 grid.cellAt(25, 22).live();
 
 
-//const view: View = new RainbowColoredView();
-//const view: View = new AgedView();
-
 function evolveAndPaint(): void {
     grid.evolve();
-    view.redrawLivingCells(grid.allCells());
+    view.redrawGrid(grid);
 }
 
-function changeToRounded(): void {
-    view = new RoundedView();
-    view.redrawLivingCells(grid.allCells());
-}
-
-function changeToOldRounded(): void {
-    view = new RoundedViewOld();
-    view.redrawLivingCells(grid.allCells());
-}
-
-function changeToClassic(): void {
-    view = new ClassicView();
-    view.redrawLivingCells(grid.allCells());
-}
-
-function changeToCircle(): void {
-    view = new CircleView();
-    view.redrawLivingCells(grid.allCells());
-}
-
-function changeToAged(): void {
-    view = new AgedView();
-    view.redrawLivingCells(grid.allCells());
-}
-
-function changeToRainbow(): void {
-    view = new RainbowColoredView();
-    view.redrawLivingCells(grid.allCells());
+function changeCellPainter(cellPaintertype: string): void {
+    view.cellPainter = CellPainterProvider.getCellPainter(cellPaintertype);
+    view.redrawGrid(grid);
 }
 
 
 
 document.getElementById('evolveButton').addEventListener('click', () => evolveAndPaint());
-document.getElementById('classicViewButton').addEventListener('click', () => changeToClassic());
-document.getElementById('circleViewButton').addEventListener('click', () => changeToCircle());
-document.getElementById('roundedViewButton').addEventListener('click', () => changeToRounded());
-document.getElementById('oldRoundedViewButton').addEventListener('click', () => changeToOldRounded());
-document.getElementById('agedViewButton').addEventListener('click', () => changeToAged());
-document.getElementById('rainbowViewButton').addEventListener('click', () => changeToRainbow());
+document.getElementById('classicButton').addEventListener('click', () => changeCellPainter('classic'));
+document.getElementById('circleButton').addEventListener('click', () => changeCellPainter('circle'));
+document.getElementById('roundedButton').addEventListener('click', () => changeCellPainter('rounded'));
+document.getElementById('oldRoundedButton').addEventListener('click', () => changeCellPainter('oldRounded'));
+document.getElementById('agedButton').addEventListener('click', () => changeCellPainter('aged'));
+document.getElementById('rainbowButton').addEventListener('click', () => changeCellPainter('rainbow'));
+document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));

@@ -1,7 +1,8 @@
-import { Cell } from '../model/cell';
-import { View } from './view';
+import { Cell } from '../../model/cell';
+import { CanvasPainter } from './canvaspainter';
+import { CellPainter } from './cellpainter';
 
-export class RoundedView extends View {
+export class RoundedCellPainter extends CanvasPainter implements CellPainter {
 
 
 
@@ -17,10 +18,9 @@ export class RoundedView extends View {
 
         livingCells.forEach(livingCell => {
             livingCell.deadNeighbours.forEach(deadCell => {
-                const orthogonalNeighbours: Cell[] = deadCell.livingNeighbours.filter(livingNeighbour => {
-                    { return deadCell.x == livingNeighbour.x || deadCell.y == livingNeighbour.y; }
-                });
-                if (orthogonalNeighbours.length >= 3) {
+                const livingOrthogonalNeighbours: number = deadCell.orthogonalNeighbours
+                    .filter(cell => cell.isAlive).length;
+                if (livingOrthogonalNeighbours >= 3) {
                     this.paintWhiteCircle(deadCell);
                 }
             });
@@ -28,7 +28,5 @@ export class RoundedView extends View {
 
         this.paintBlackCircles(livingCells);
     }
-
-
 
 }

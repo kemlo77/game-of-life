@@ -1,7 +1,8 @@
-import { Cell } from '../model/cell';
-import { View } from './view';
+import { Cell } from '../../model/cell';
+import { CanvasPainter } from './canvaspainter';
+import { CellPainter } from './cellpainter';
 
-export class RainbowColoredView extends View {
+export class RainbowCellPainter extends CanvasPainter implements CellPainter {
 
     private colorStrings: string[] = [
         'rgba(255,0,0,1)', //red
@@ -32,16 +33,7 @@ export class RainbowColoredView extends View {
 
 
     plotCells(cells: Cell[]): void {
-        this.canvasCtx.fillStyle = this.getNextColor();
-        this.canvasCtx.beginPath(); //varför måste jag ha med detta för att färgändring ska slå igenom
-        this.canvasCtx.stroke();    // dito
-        const squareWidth: number = this.gridCellWidth - 2;
-        cells.forEach(cell => {
-            const xAdjusted: number = this.gridCellWidth / 2 + cell.x * this.gridCellWidth;
-            const yAdjusted: number = this.gridCellWidth / 2 + cell.y * this.gridCellWidth;
-            this.canvasCtx.rect(xAdjusted - squareWidth / 2, yAdjusted - squareWidth / 2, squareWidth, squareWidth);
-            this.canvasCtx.fill();
-        });
+        this.paintSquares(cells, this.getNextColor());
     }
 
     private getNextColor(): string {

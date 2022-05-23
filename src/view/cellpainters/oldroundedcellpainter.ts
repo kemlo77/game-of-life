@@ -1,7 +1,9 @@
-import { Cell } from '../model/cell';
-import { View } from './view';
+import { Cell } from '../../model/cell';
+import { View } from '../view';
+import { CanvasPainter } from './canvaspainter';
+import { CellPainter } from './cellpainter';
 
-export class RoundedViewOld extends View {
+export class OldRoundedCellPainter extends CanvasPainter implements CellPainter {
 
 
 

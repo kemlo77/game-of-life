@@ -29,10 +29,22 @@ export class Cell {
 
     get numberOfNeighbours(): number { return this._neighbours.length; }
 
-    get numberOfLivingNeighbours(): number { return this._neighbours.filter(cell => cell.isAlive).length; }
+    get numberOfLivingNeighbours(): number { return this.livingNeighbours.length; }
 
     get deadNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isDead); }
     get livingNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isAlive); }
+
+    get orthogonalNeighbours(): Cell[] {
+        return this._neighbours.filter(neigbour => {
+            return this._x == neigbour.x || this._y == neigbour.y;
+        });
+    }
+
+    get diagonalNeighbours(): Cell[] {
+        return this._neighbours.filter(neigbour => {
+            return this._x !== neigbour.x && this._y !== neigbour.y;
+        });
+    }
 
     get isAlive(): boolean { return this._age > 0; }
 
