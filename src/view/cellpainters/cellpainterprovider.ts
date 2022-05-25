@@ -3,33 +3,28 @@ import { CellPainter } from './cellpainter';
 import { CircleCellPainter } from './circlecellpainter';
 import { ClassicCellPainter } from './classiccellpainter';
 import { MoleculeCellPainter } from './moleculecellpainter';
+import { MoleculeCellPainterThree } from './moleculecellpainterthree';
+import { MoleculeCellPainterTwo } from './moleculecellpaintertwo';
 import { OldRoundedCellPainter } from './oldroundedcellpainter';
 import { RainbowCellPainter } from './rainbowcellpainter';
 import { RoundedCellPainter } from './roundedcellpainter';
 
+//TODO: döpa om till factory?
 export class CellPainterProvider {
 
 
     static getCellPainter(painterType: string): CellPainter {
-        if (painterType === 'circle') {
-            return new CircleCellPainter();
+        switch (painterType) {
+            case 'circle': return new CircleCellPainter();
+            case 'rounded': return new RoundedCellPainter();
+            case 'oldRounded': return new OldRoundedCellPainter();
+            case 'aged': return new AgedCellPainter();
+            case 'rainbow': return new RainbowCellPainter();
+            case 'molecule': return new MoleculeCellPainter();
+            case 'moleculeTwo': return new MoleculeCellPainterTwo();
+            case 'moleculeThree': return new MoleculeCellPainterThree();
+            default: return new ClassicCellPainter();
         }
-        if (painterType === 'rounded') {
-            return new RoundedCellPainter();
-        }
-        if (painterType === 'oldRounded') {
-            return new OldRoundedCellPainter();
-        }
-        if (painterType === 'aged') {
-            return new AgedCellPainter();
-        }
-        if (painterType === 'rainbow') {
-            return new RainbowCellPainter();
-        }
-        if (painterType === 'molecule') {
-            return new MoleculeCellPainter();
-        }
-        return new ClassicCellPainter();
     }
 
 }

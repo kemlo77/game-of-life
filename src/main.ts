@@ -57,3 +57,5 @@ document.getElementById('oldRoundedButton').addEventListener('click', () => chan
 document.getElementById('agedButton').addEventListener('click', () => changeCellPainter('aged'));
 document.getElementById('rainbowButton').addEventListener('click', () => changeCellPainter('rainbow'));
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
+document.getElementById('moleculeTwoButton').addEventListener('click', () => changeCellPainter('moleculeTwo'));
+document.getElementById('moleculeThreeButton').addEventListener('click', () => changeCellPainter('moleculeThree'));

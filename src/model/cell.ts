@@ -34,6 +34,7 @@ export class Cell {
     get deadNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isDead); }
     get livingNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isAlive); }
 
+    //TODO
     get orthogonalNeighbours(): Cell[] {
         return this._neighbours.filter(neigbour => {
             return this._x == neigbour.x || this._y == neigbour.y;
@@ -56,11 +57,11 @@ export class Cell {
 
     planFate(): void {
         if (this.isAlive) {
-            if (this.numberOfLivingNeighbours !== 2 && this.numberOfLivingNeighbours !== 3) {
-                this._plannedFate = this._killMe;
+            if (this.numberOfLivingNeighbours == 2 || this.numberOfLivingNeighbours == 3) {
+                this._plannedFate = this._continueLiving;
                 return;
             } else {
-                this._plannedFate = this._continueLiving;
+                this._plannedFate = this._killMe;
                 return;
             }
         }
