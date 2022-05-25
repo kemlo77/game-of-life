@@ -1,4 +1,5 @@
 import { Cell } from '../../model/cell';
+import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
@@ -11,8 +12,8 @@ export class AgedCellPainter extends CanvasPainter implements CellPainter {
         this.canvasCtx.fill();
     }
 
-    plotCells(cells: Cell[]): void {
-        cells.forEach(cell => {
+    plotCells(grid: Grid): void {
+        grid.allLiveCells().forEach(cell => {
 
             this.paintSquares([cell], this.colorGivenTheAgeOfCell(cell));
         });

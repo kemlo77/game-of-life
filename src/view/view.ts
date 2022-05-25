@@ -12,7 +12,7 @@ export class View {
 
     redrawGrid(grid: Grid): void {
         this._cellPainter.clearTheCanvas();
-        this._cellPainter.plotCells(grid.allLiveCells());
+        this._cellPainter.plotCells(grid);
     }
 
 }

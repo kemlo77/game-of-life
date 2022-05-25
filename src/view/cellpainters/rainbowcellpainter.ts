@@ -1,4 +1,4 @@
-import { Cell } from '../../model/cell';
+import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
@@ -32,8 +32,8 @@ export class RainbowCellPainter extends CanvasPainter implements CellPainter {
 
 
 
-    plotCells(cells: Cell[]): void {
-        this.paintSquares(cells, this.getNextColor());
+    plotCells(grid: Grid): void {
+        this.paintSquares(grid.allLiveCells(), this.getNextColor());
     }
 
     private getNextColor(): string {

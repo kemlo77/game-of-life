@@ -1,5 +1,5 @@
 import { Cell } from '../../model/cell';
-import { View } from '../view';
+import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
@@ -8,7 +8,8 @@ export class OldRoundedCellPainter extends CanvasPainter implements CellPainter 
 
 
 
-    plotCells(livingCells: Cell[]): void {
+    plotCells(grid: Grid): void {
+        const livingCells: Cell[] = grid.allLiveCells();
 
         livingCells.forEach(livingCell => {
             livingCell.livingNeighbours

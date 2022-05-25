@@ -1,10 +1,12 @@
 import { Cell } from '../../model/cell';
+import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
 export class MoleculeCellPainterTwo extends CanvasPainter implements CellPainter {
 
-    plotCells(livingCells: Cell[]): void {
+    plotCells(grid: Grid): void {
+        const livingCells: Cell[] = grid.allLiveCells();
 
         livingCells.filter(cell => cell.numberOfLivingNeighbours > 0)
             .forEach(cell => {
