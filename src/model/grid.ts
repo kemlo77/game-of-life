@@ -38,19 +38,16 @@ export class Grid {
             if (alreadyChecked.has(livingCell)) {
                 continue;
             }
-            
-            
+
             const cluster: Cell[] = [];
-
-
             const candidates: Cell[] = [livingCell];
 
             while (candidates.length > 0) {
-                //Om kandidaten inte finns lägg till i Kluster
+
                 const candidate: Cell = candidates.pop();
                 alreadyChecked.add(livingCell);
                 cluster.push(candidate);
-                //Grannar som inte redan är kollade läggs till i candidates
+
                 candidate.livingNeighbours.forEach(neigbour => {
                     if (!alreadyChecked.has(neigbour)) {
                         alreadyChecked.add(neigbour);
@@ -59,9 +56,7 @@ export class Grid {
                 });
             }
             clusterArray.push(cluster);
-            
         }
-
         return clusterArray;
     }
 

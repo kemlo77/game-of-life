@@ -34,7 +34,6 @@ export class Cell {
     get deadNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isDead); }
     get livingNeighbours(): Cell[] { return this._neighbours.filter(cell => cell.isAlive); }
 
-    //TODO
     get orthogonalNeighbours(): Cell[] {
         return this._neighbours.filter(neigbour => {
             return this._x == neigbour.x || this._y == neigbour.y;

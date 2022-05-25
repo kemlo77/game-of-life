@@ -59,3 +59,4 @@ document.getElementById('rainbowButton').addEventListener('click', () => changeC
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
 document.getElementById('moleculeTwoButton').addEventListener('click', () => changeCellPainter('moleculeTwo'));
 document.getElementById('moleculeThreeButton').addEventListener('click', () => changeCellPainter('moleculeThree'));
+document.getElementById('connectionButton').addEventListener('click', () => changeCellPainter('connection'));

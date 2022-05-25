@@ -4,7 +4,6 @@ import { MoleculeCellPainter } from './cellpainters/moleculecellpainter';
 
 export class View {
 
-
     private _cellPainter: CellPainter = new MoleculeCellPainter();
 
     set cellPainter(cellPainter: CellPainter) {
@@ -13,11 +12,7 @@ export class View {
 
     redrawGrid(grid: Grid): void {
         this._cellPainter.clearTheCanvas();
-        this._cellPainter.plotCells(grid.allLiveCells(), this.getColor());
-    }
-
-    getColor(): string {
-        return 'rgba(0,0,0,1)';
+        this._cellPainter.plotCells(grid.allLiveCells());
     }
 
 }

@@ -7,7 +7,7 @@ export class RoundedCellPainter extends CanvasPainter implements CellPainter {
 
 
 
-    plotCells(livingCells: Cell[], givenColor: string): void {
+    plotCells(livingCells: Cell[]): void {
 
         livingCells.forEach(livingCell => {
             livingCell.livingNeighbours

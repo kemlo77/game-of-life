@@ -25,7 +25,7 @@ export class CanvasPainter {
 
     //TODO: bättre namn
     protected paintThinLineBetweenCells(cell1: Cell, cell2: Cell, width: number): void {
-        this.canvasCtx.fillStyle = 'rgba(0,0,0,1)';
+        this.canvasCtx.strokeStyle = 'rgba(0,0,0,1)';
         this.canvasCtx.lineWidth = width;
         this.canvasCtx.lineCap = 'round';
         this.canvasCtx.beginPath();
@@ -40,6 +40,11 @@ export class CanvasPainter {
         this.canvasCtx.beginPath();
         this.canvasCtx.arc(this.adjustX(cell.x), this.adjustY(cell.y), radius, 0, 2 * Math.PI);
         this.canvasCtx.fill();
+    }
+
+    paintCellsAsHollowDots(cells: Cell[], outerColor: string, innerColor: string): void {
+        this.paintCircles(cells, outerColor, this.gridCellWidth * 0.32);
+        this.paintCircles(cells, innerColor, this.gridCellWidth * 0.2);
     }
 
 

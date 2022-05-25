@@ -5,8 +5,7 @@ import { CellPainter } from './cellpainter';
 
 export class CircleCellPainter extends CanvasPainter implements CellPainter {
 
-
-    plotCells(cells: Cell[], givenColor: string): void {
+    plotCells(cells: Cell[]): void {
         this.paintBlackCircles(cells);
     }
 
