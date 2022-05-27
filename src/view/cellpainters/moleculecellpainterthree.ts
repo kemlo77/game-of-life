@@ -9,49 +9,53 @@ export class MoleculeCellPainterThree extends CanvasPainter implements CellPaint
 
         //dela upp cellerna i kluster
         grid.clusters.forEach(cluster => {
-            const cellsToVisit: number = cluster.length;
-            const visitedCells: Set<Cell> = new Set();
-            visitedCells.add(cluster[0]);
-            const visitTrail: Cell[] = [cluster[0]];
+            const cellsToConnect: number = cluster.length;
+            const connectedCells: Set<Cell> = new Set();
+            const connectionTrail: Cell[] = [];
+            const startCell: Cell = radomCellInArray(cluster);
+            connectCell(startCell);
 
-            while (cellsToVisit > visitedCells.size) {
-                while (cellHasNoUnvisitedNeigbours(currentCell()) && visitedTrailNotEmpty()) {
+
+            while (cellsToConnect > connectedCells.size) {
+                while (cellHasNoUnconnectedNeigbours(currentCell()) && connectedTrailNotEmpty()) {
                     stepBackwards();
                 }
-                const randomNeighbour: Cell = randomUnvisitedNeighbour(currentCell());
+                const randomNeighbour: Cell = randomUnconnectedNeighbour(currentCell());
                 this.paintThinLineBetweenCells(currentCell(), randomNeighbour, 2.5);
-                visitRandomNeighbour(randomNeighbour);
+                connectCell(randomNeighbour);
             }
 
 
             function currentCell(): Cell {
-                const currentCell: Cell = visitTrail[visitTrail.length - 1];
+                const currentCell: Cell = connectionTrail[connectionTrail.length - 1];
                 return currentCell;
             }
 
-            function visitedTrailNotEmpty(): boolean {
-                return visitTrail.length != 0;
+            function connectedTrailNotEmpty(): boolean {
+                return connectionTrail.length != 0;
             }
 
-            function cellHasNoUnvisitedNeigbours(cell: Cell): boolean {
-                return cell.livingNeighbours.every(neigbour => visitedCells.has(neigbour));
+            function cellHasNoUnconnectedNeigbours(cell: Cell): boolean {
+                return cell.livingNeighbours.every(neigbour => connectedCells.has(neigbour));
             }
 
             function stepBackwards(): void {
-                visitTrail.pop();
+                connectionTrail.pop();
             }
 
-            function randomUnvisitedNeighbour(cell: Cell): Cell {
+            function randomUnconnectedNeighbour(cell: Cell): Cell {
                 const unvisitedNeighbours: Cell[] = cell.livingNeighbours
-                    .filter(neighbour => !visitedCells.has(neighbour));
-                const randomUnvisitedNeighbour: Cell =
-                    unvisitedNeighbours[Math.floor(Math.random() * unvisitedNeighbours.length)];
-                return randomUnvisitedNeighbour;
+                    .filter(neighbour => !connectedCells.has(neighbour));
+                return radomCellInArray(unvisitedNeighbours);
             }
 
-            function visitRandomNeighbour(cell: Cell): void {
-                visitedCells.add(cell);
-                visitTrail.push(cell);
+            function connectCell(cell: Cell): void {
+                connectedCells.add(cell);
+                connectionTrail.push(cell);
+            }
+
+            function radomCellInArray(cells: Cell[]): Cell {
+                return cells[Math.floor(Math.random() * cells.length)];
             }
 
 

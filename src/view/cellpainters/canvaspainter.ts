@@ -4,7 +4,7 @@ export class CanvasPainter {
 
     protected canvasElement: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
     protected canvasCtx: CanvasRenderingContext2D = this.canvasElement.getContext('2d');
-    protected gridCellWidth = 25;
+    protected gridCellWidth = 20;
 
     clearTheCanvas(): void {
         this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);

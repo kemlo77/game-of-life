@@ -5,7 +5,7 @@ import { CellPainterProvider } from './view/cellpainters/cellpainterprovider';
 
 
 
-const grid: Grid = new Grid(50, 45);
+const grid: Grid = new Grid(60, 55);
 const view: View = new View();
 
 //Glider
@@ -25,16 +25,25 @@ grid.cellAt(7, 4).live();
 
 //corner
 grid.cellAt(0, 0).live();
-grid.cellAt(49, 44).live();
+grid.cellAt(59, 54).live();
 
-//acorn
-grid.cellAt(24, 24).live();
-grid.cellAt(25, 24).live();
-grid.cellAt(28, 24).live();
-grid.cellAt(29, 24).live();
-grid.cellAt(30, 24).live();
-grid.cellAt(27, 23).live();
-grid.cellAt(25, 22).live();
+// //acorn
+// grid.cellAt(29, 24).live();
+// grid.cellAt(30, 24).live();
+// grid.cellAt(33, 24).live();
+// grid.cellAt(34, 24).live();
+// grid.cellAt(35, 24).live();
+// grid.cellAt(32, 23).live();
+// grid.cellAt(30, 22).live();
+
+//xxx
+grid.cellAt(30, 27).live();
+grid.cellAt(30, 28).live();
+grid.cellAt(30, 29).live();
+grid.cellAt(31, 26).live();
+grid.cellAt(32, 26).live();
+grid.cellAt(33, 27).live();
+grid.cellAt(32, 28).live();
 
 
 function evolveAndPaint(): void {
