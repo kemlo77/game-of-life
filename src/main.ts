@@ -2,6 +2,7 @@ import './style.css';
 import { Grid } from './model/grid';
 import { View } from './view/view';
 import { CellPainterProvider } from './view/cellpainters/cellpainterprovider';
+import { Coordinate } from './view/coordinate';
 
 
 
@@ -27,15 +28,6 @@ grid.cellAt(7, 4).live();
 grid.cellAt(0, 0).live();
 grid.cellAt(59, 54).live();
 
-// //acorn
-// grid.cellAt(29, 24).live();
-// grid.cellAt(30, 24).live();
-// grid.cellAt(33, 24).live();
-// grid.cellAt(34, 24).live();
-// grid.cellAt(35, 24).live();
-// grid.cellAt(32, 23).live();
-// grid.cellAt(30, 22).live();
-
 //xxx
 grid.cellAt(30, 27).live();
 grid.cellAt(30, 28).live();
@@ -56,7 +48,18 @@ function changeCellPainter(cellPaintertype: string): void {
     view.redrawGrid(grid);
 }
 
+function canvasLeftClicked(event: MouseEvent, canvasId: string): void {
+    const coordinate: Coordinate =  getMouseCoordinate(event, canvasId);
+    grid.cellAt(Math.floor(coordinate.x/20),Math.floor(coordinate.y/20)).toggleLifeDeath();
+    view.redrawGrid(grid);
+}
 
+function getMouseCoordinate(event: MouseEvent, elementId: string): Coordinate {
+    const rect: DOMRect = document.getElementById(elementId).getBoundingClientRect();
+    const x: number = event.clientX - rect.left;
+    const y: number = event.clientY - rect.top;
+    return new Coordinate(x,y);
+}
 
 document.getElementById('evolveButton').addEventListener('click', () => evolveAndPaint());
 document.getElementById('classicButton').addEventListener('click', () => changeCellPainter('classic'));
@@ -69,3 +72,6 @@ document.getElementById('moleculeButton').addEventListener('click', () => change
 document.getElementById('moleculeTwoButton').addEventListener('click', () => changeCellPainter('moleculeTwo'));
 document.getElementById('moleculeThreeButton').addEventListener('click', () => changeCellPainter('moleculeThree'));
 document.getElementById('connectionButton').addEventListener('click', () => changeCellPainter('connection'));
+
+document.getElementById('myCanvas')
+    .addEventListener('click', (event) => canvasLeftClicked(event, (event.target as Element).id));

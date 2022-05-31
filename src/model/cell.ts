@@ -54,6 +54,14 @@ export class Cell {
 
     die(): void { this._age = 0; }
 
+    toggleLifeDeath(): void {
+        if (this.isAlive) {
+            this.die();
+        } else {
+            this.live();
+        }
+    }
+
     planFate(): void {
         if (this.isAlive) {
             if (this.numberOfLivingNeighbours == 2 || this.numberOfLivingNeighbours == 3) {
