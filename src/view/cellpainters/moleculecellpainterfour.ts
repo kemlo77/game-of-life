@@ -11,7 +11,7 @@ export class MoleculeCellPainterFour extends CanvasPainter implements CellPainte
         //orthogonal connections
         livingCells
             .forEach(cell => {
-                cell.orthogonalNeighbours.filter(neighbour => neighbour.isAlive)
+                cell.livingOrthogonalNeighbours
                     .forEach(neighbour => {
                         this.paintThinLineBetweenCells(cell, neighbour, 2.5);
                     });
@@ -19,7 +19,7 @@ export class MoleculeCellPainterFour extends CanvasPainter implements CellPainte
 
         this.cellsWithNoLivingOrthogonalNeihbours(livingCells)
             .forEach(cell => {
-                this.livingDiagonalNeighbours(cell)
+                cell.livingDiagonalNeighbours
                     .forEach(neighbour => {
                         this.paintThinLineBetweenCells(cell, neighbour, 2.5);
                     });
@@ -36,27 +36,12 @@ export class MoleculeCellPainterFour extends CanvasPainter implements CellPainte
 
     private cellsWithNoLivingOrthogonalNeihbours(cells: Cell[]): Cell[] {
         return cells
-            .filter(cell => cell.orthogonalNeighbours.every(neighbour => neighbour.isDead));
+            .filter(cell => cell.livingOrthogonalNeighbours.length == 0);
     }
 
     private cellsWithOneLivingOrthogonalNeihbours(cells: Cell[]): Cell[] {
         return cells
-            .filter(cell => cell.orthogonalNeighbours.filter(neighbour => neighbour.isAlive).length == 1);
-    }
-
-    private cellsWithOneOrLessLivingOrthogonalNeihbours(cells: Cell[]): Cell[] {
-        return cells
-            .filter(cell => cell.orthogonalNeighbours.filter(neighbour => neighbour.isAlive).length <= 1);
-    }
-
-    private livingDiagonalNeighbours(cell: Cell): Cell[] {
-        return cell.diagonalNeighbours.filter(neighbour => neighbour.isAlive);
-    }
-
-    private livingDiagonalNeighboursWithOneOrLessLivingOrthogonalNeighbour(cell: Cell): Cell[] {
-        return cell.diagonalNeighbours
-            .filter(neighbour => neighbour.isAlive)
-            .filter(neighbour => neighbour.orthogonalNeighbours.filter(neighbour => neighbour.isAlive).length == 1);
+            .filter(cell => cell.livingOrthogonalNeighbours.length == 1);
     }
 
 

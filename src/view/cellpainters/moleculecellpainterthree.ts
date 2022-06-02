@@ -7,7 +7,6 @@ export class MoleculeCellPainterThree extends CanvasPainter implements CellPaint
 
     plotCells(grid: Grid): void {
 
-        //dela upp cellerna i kluster
         grid.clusters.forEach(cluster => {
             const cellsToConnect: number = cluster.length;
             const connectedCells: Set<Cell> = new Set();

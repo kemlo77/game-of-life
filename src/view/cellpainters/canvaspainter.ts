@@ -10,6 +10,12 @@ export class CanvasPainter {
         this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     }
 
+    clearTheCanvasPartially(): void {
+        this.canvasCtx.fillStyle = 'rgba(255,255,255,0.85)';
+        this.canvasCtx.rect(0, 0, this.canvasElement.width, this.canvasElement.height);
+        this.canvasCtx.fill();
+    }
+
 
 
 

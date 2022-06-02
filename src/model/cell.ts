@@ -39,11 +39,18 @@ export class Cell {
             return this._x == neigbour.x || this._y == neigbour.y;
         });
     }
+    get livingOrthogonalNeighbours(): Cell[] {
+        return this.orthogonalNeighbours.filter(neighbour => neighbour.isAlive);
+    }
 
     get diagonalNeighbours(): Cell[] {
         return this._neighbours.filter(neigbour => {
             return this._x !== neigbour.x && this._y !== neigbour.y;
         });
+    }
+
+    get livingDiagonalNeighbours(): Cell[] {
+        return this.diagonalNeighbours.filter(neighbour => neighbour.isAlive);
     }
 
     get isAlive(): boolean { return this._age > 0; }

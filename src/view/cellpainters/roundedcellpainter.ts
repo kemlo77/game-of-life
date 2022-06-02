@@ -19,13 +19,11 @@ export class RoundedCellPainter extends CanvasPainter implements CellPainter {
         });
 
         livingCells.forEach(livingCell => {
-            livingCell.deadNeighbours.forEach(deadCell => {
-                const livingOrthogonalNeighbours: number = deadCell.orthogonalNeighbours
-                    .filter(cell => cell.isAlive).length;
-                if (livingOrthogonalNeighbours >= 3) {
+            livingCell.deadNeighbours
+                .filter(deadCell => deadCell.livingOrthogonalNeighbours.length >= 3)
+                .forEach(deadCell => {
                     this.paintWhiteCircle(deadCell);
-                }
-            });
+                });
         });
 
         this.paintBlackCircles(livingCells);

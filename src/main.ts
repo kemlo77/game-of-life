@@ -72,13 +72,12 @@ document.getElementById('circleButton').addEventListener('click', () => changeCe
 document.getElementById('roundedButton').addEventListener('click', () => changeCellPainter('rounded'));
 document.getElementById('oldRoundedButton').addEventListener('click', () => changeCellPainter('oldRounded'));
 document.getElementById('agedButton').addEventListener('click', () => changeCellPainter('aged'));
-document.getElementById('rainbowButton').addEventListener('click', () => changeCellPainter('rainbow'));
+document.getElementById('neigboursButton').addEventListener('click', () => changeCellPainter('neighbours'));
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
 document.getElementById('moleculeTwoButton').addEventListener('click', () => changeCellPainter('moleculeTwo'));
 document.getElementById('moleculeThreeButton').addEventListener('click', () => changeCellPainter('moleculeThree'));
 document.getElementById('moleculeFourButton').addEventListener('click', () => changeCellPainter('moleculeFour'));
 document.getElementById('moleculeFiveButton').addEventListener('click', () => changeCellPainter('moleculeFive'));
-document.getElementById('connectionButton').addEventListener('click', () => changeCellPainter('connection'));
 
 document.getElementById('killAllButton').addEventListener('click', () => killAll());
 
