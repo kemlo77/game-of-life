@@ -5,16 +5,13 @@ import { CellPainter } from './cellpainter';
 
 export class RoundedCellPainter extends CanvasPainter implements CellPainter {
 
-
-
-
     plotCells(grid: Grid): void {
         const livingCells: Cell[] = grid.allLiveCells();
 
         livingCells.forEach(livingCell => {
             livingCell.livingNeighbours
                 .forEach(livingNeighbourCell => {
-                    this.paintLineBetweenCells(livingCell, livingNeighbourCell);
+                    this.paintWideLineBetweenCells(livingCell, livingNeighbourCell);
                 });
         });
 

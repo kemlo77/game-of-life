@@ -2,24 +2,24 @@ export class Cell {
 
     private _neighbours: Cell[] = [];
     private _age = 0;
-    private _x = 0;
-    private _y = 0;
+    private _columnIndex = 0;
+    private _rowIndex = 0;
     private _killMe: () => void = () => this.die();
     private _doNothing: () => void = () => { return; };
     private _reviveMe: () => void = () => this.live();
     private _continueLiving: () => void = () => this.live();
     private _plannedFate: () => void = this._doNothing;
 
-    constructor(x: number, y: number) {
-        this._x = x;
-        this._y = y;
+    constructor(columnIndex: number, rowIndex: number) {
+        this._columnIndex = columnIndex;
+        this._rowIndex = rowIndex;
     }
 
     get age(): number { return this._age; }
 
-    get x(): number { return this._x; }
+    get columnIndex(): number { return this._columnIndex; }
 
-    get y(): number { return this._y; }
+    get rowIndex(): number { return this._rowIndex; }
 
     addNeighbour(cell: Cell): void { this._neighbours.push(cell); }
 
@@ -36,7 +36,7 @@ export class Cell {
 
     get orthogonalNeighbours(): Cell[] {
         return this._neighbours.filter(neigbour => {
-            return this._x == neigbour.x || this._y == neigbour.y;
+            return this._columnIndex == neigbour.columnIndex || this._rowIndex == neigbour.rowIndex;
         });
     }
     get livingOrthogonalNeighbours(): Cell[] {
@@ -45,7 +45,7 @@ export class Cell {
 
     get diagonalNeighbours(): Cell[] {
         return this._neighbours.filter(neigbour => {
-            return this._x !== neigbour.x && this._y !== neigbour.y;
+            return this._columnIndex !== neigbour.columnIndex && this._rowIndex !== neigbour.rowIndex;
         });
     }
 

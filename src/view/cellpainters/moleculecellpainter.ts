@@ -10,7 +10,7 @@ export class MoleculeCellPainter extends CanvasPainter implements CellPainter {
         grid.allLiveCells().forEach(livingCell => {
             livingCell.livingNeighbours
                 .forEach(livingNeighbourCell => {
-                    this.paintThinLineBetweenCells(livingCell, livingNeighbourCell, 2.5);
+                    this.paintThinLineBetweenCells(livingCell, livingNeighbourCell);
                 });
         });
 

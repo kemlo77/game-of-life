@@ -14,7 +14,7 @@ export class OldRoundedCellPainter extends CanvasPainter implements CellPainter 
         livingCells.forEach(livingCell => {
             livingCell.livingNeighbours
                 .forEach(livingNeighbourCell => {
-                    this.paintLineBetweenCells(livingCell, livingNeighbourCell);
+                    this.paintWideLineBetweenCells(livingCell, livingNeighbourCell);
                 });
         });
 

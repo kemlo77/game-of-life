@@ -20,7 +20,7 @@ export class MoleculeCellPainterThree extends CanvasPainter implements CellPaint
                     stepBackwards();
                 }
                 const randomNeighbour: Cell = randomUnconnectedNeighbour(currentCell());
-                this.paintThinLineBetweenCells(currentCell(), randomNeighbour, 2.5);
+                this.paintThinLineBetweenCells(currentCell(), randomNeighbour);
                 connectCell(randomNeighbour);
             }
 

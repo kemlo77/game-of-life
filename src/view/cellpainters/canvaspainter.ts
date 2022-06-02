@@ -1,51 +1,36 @@
 import { Cell } from '../../model/cell';
+import { Coordinate } from '../coordinate';
 
 export class CanvasPainter {
+    private white: string = 'rgba(255,255,255,1)';
+    private black: string = 'rgba(0,0,0,1)';
 
     protected canvasElement: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
     protected canvasCtx: CanvasRenderingContext2D = this.canvasElement.getContext('2d');
-    protected gridCellWidth = 20;
+    private gridCellWidth = 20;
 
     clearTheCanvas(): void {
         this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     }
 
-    clearTheCanvasPartially(): void {
-        this.canvasCtx.fillStyle = 'rgba(255,255,255,0.85)';
-        this.canvasCtx.rect(0, 0, this.canvasElement.width, this.canvasElement.height);
-        this.canvasCtx.fill();
+    protected paintWideLineBetweenCells(cell1: Cell, cell2: Cell): void {
+        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth, this.black);
     }
 
-
-
-
-    protected paintLineBetweenCells(cell1: Cell, cell2: Cell): void {
-        this.canvasCtx.fillStyle = 'rgba(0,0,0,1)';
-        this.canvasCtx.lineWidth = this.gridCellWidth;
-        this.canvasCtx.lineCap = 'round';
-        this.canvasCtx.beginPath();
-        this.canvasCtx.moveTo(this.adjustX(cell1.x), this.adjustY(cell1.y));
-        this.canvasCtx.lineTo(this.adjustX(cell2.x), this.adjustY(cell2.y));
-        this.canvasCtx.stroke();
+    protected paintThinLineBetweenCells(cell1: Cell, cell2: Cell): void {
+        this.paintLineBetweenCells(cell1, cell2, 2.5, this.black);
     }
 
-    //TODO: bättre namn
-    protected paintThinLineBetweenCells(cell1: Cell, cell2: Cell, width: number): void {
-        this.canvasCtx.strokeStyle = 'rgba(0,0,0,1)';
+    protected paintLineBetweenCells(cell1: Cell, cell2: Cell, width: number, color: string): void {
+        this.canvasCtx.strokeStyle = color;
+        const centerOfCell1: Coordinate = this.centerOfCell(cell1);
+        const centerOfCell2: Coordinate = this.centerOfCell(cell2);
         this.canvasCtx.lineWidth = width;
         this.canvasCtx.lineCap = 'round';
         this.canvasCtx.beginPath();
-        this.canvasCtx.moveTo(this.adjustX(cell1.x), this.adjustY(cell1.y));
-        this.canvasCtx.lineTo(this.adjustX(cell2.x), this.adjustY(cell2.y));
+        this.canvasCtx.moveTo(centerOfCell1.x, centerOfCell1.y);
+        this.canvasCtx.lineTo(centerOfCell2.x, centerOfCell2.y);
         this.canvasCtx.stroke();
-    }
-
-    private paintCircle(cell: Cell, color: string): void {
-        const radius: number = this.gridCellWidth / 2;
-        this.canvasCtx.fillStyle = color;
-        this.canvasCtx.beginPath();
-        this.canvasCtx.arc(this.adjustX(cell.x), this.adjustY(cell.y), radius, 0, 2 * Math.PI);
-        this.canvasCtx.fill();
     }
 
     paintCellsAsHollowDots(cells: Cell[], outerColor: string, innerColor: string): void {
@@ -59,42 +44,48 @@ export class CanvasPainter {
     protected paintBlackCircle(cell: Cell): void { this.paintBlackCircles([cell]); }
 
     protected paintWhiteCircles(cells: Cell[]): void {
-        this.paintCircles(cells, 'rgba(255,255,255,1)', this.gridCellWidth / 2);
+        this.paintCircles(cells, this.white, this.gridCellWidth / 2);
     }
 
     protected paintBlackCircles(cells: Cell[]): void {
-        this.paintCircles(cells, 'rgba(0,0,0,1)', this.gridCellWidth / 2);
+        this.paintCircles(cells, this.black, this.gridCellWidth / 2);
     }
 
     protected paintCircles(cells: Cell[], color: string, width: number): void {
         const radius: number = width;
         this.canvasCtx.fillStyle = color;
         cells.forEach(cell => {
+            const center: Coordinate = this.centerOfCell(cell);
             this.canvasCtx.beginPath();
-            this.canvasCtx.arc(this.adjustX(cell.x), this.adjustY(cell.y), radius, 0, 2 * Math.PI);
+            this.canvasCtx.arc(center.x, center.y, radius, 0, 2 * Math.PI);
             this.canvasCtx.fill();
         });
     }
 
     protected paintSquares(cells: Cell[], color: string): void {
+        const padding: number = 1;
         this.canvasCtx.fillStyle = color;
         this.canvasCtx.beginPath(); //varför måste jag ha med detta för att färgändring ska slå igenom
         this.canvasCtx.stroke();    // dito
-        const squareWidth: number = this.gridCellWidth - 2;
+        const squareWidth: number = this.gridCellWidth - 2 * padding;
         cells.forEach(cell => {
-            const xAdjusted: number = this.gridCellWidth / 2 + cell.x * this.gridCellWidth;
-            const yAdjusted: number = this.gridCellWidth / 2 + cell.y * this.gridCellWidth;
-            this.canvasCtx.rect(xAdjusted - squareWidth / 2, yAdjusted - squareWidth / 2, squareWidth, squareWidth);
+            const corner: Coordinate = this.upperLeftCornerOfCell(cell);
+            this.canvasCtx.rect(corner.x + padding, corner.y + padding, squareWidth, squareWidth);
             this.canvasCtx.fill();
         });
     }
 
-    private adjustX(x: number): number {
-        return x * this.gridCellWidth + this.gridCellWidth / 2;
+    private upperLeftCornerOfCell(cell: Cell): Coordinate {
+        const xPart: number = cell.columnIndex * this.gridCellWidth;
+        const yPart: number = cell.rowIndex * this.gridCellWidth;
+        return new Coordinate(xPart, yPart);
     }
 
-    private adjustY(y: number): number {
-        return y * this.gridCellWidth + this.gridCellWidth / 2;
+    private centerOfCell(cell: Cell): Coordinate {
+        const xPart: number = cell.columnIndex * this.gridCellWidth + this.gridCellWidth / 2;
+        const yPart: number = cell.rowIndex * this.gridCellWidth + this.gridCellWidth / 2;
+        return new Coordinate(xPart, yPart);
     }
+
 
 }

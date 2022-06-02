@@ -10,7 +10,7 @@ export class MoleculeCellPainterTwo extends CanvasPainter implements CellPainter
 
         livingCells.filter(cell => cell.numberOfLivingNeighbours > 0)
             .forEach(cell => {
-                this.paintThinLineBetweenCells(cell, this.randomLivingNeighbourTo(cell), 2.5);
+                this.paintThinLineBetweenCells(cell, this.randomLivingNeighbourTo(cell));
             });
         this.paintCellsAsHollowDots(livingCells, 'rgba(0,0,0,1)', 'rgba(255,255,0,1)');
     }

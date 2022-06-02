@@ -78,8 +78,8 @@ export class Grid {
 
             this.allCells()
                 .filter(cell => cell !== currentCell)
-                .filter(cell => Math.abs(currentCell.x - cell.x) <= 1)
-                .filter(cell => Math.abs(currentCell.y - cell.y) <= 1)
+                .filter(cell => Math.abs(currentCell.columnIndex - cell.columnIndex) <= 1)
+                .filter(cell => Math.abs(currentCell.rowIndex - cell.rowIndex) <= 1)
                 .forEach(cell => currentCell.addNeighbour(cell));
 
         });

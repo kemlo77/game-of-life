@@ -13,7 +13,7 @@ export class MoleculeCellPainterFive extends CanvasPainter implements CellPainte
             .forEach(cell => {
                 cell.livingDiagonalNeighbours
                     .forEach(neighbour => {
-                        this.paintThinLineBetweenCells(cell, neighbour, 2.5);
+                        this.paintThinLineBetweenCells(cell, neighbour);
                     });
             });
 
@@ -23,13 +23,13 @@ export class MoleculeCellPainterFive extends CanvasPainter implements CellPainte
             .forEach(cell => {
                 cell.livingOrthogonalNeighbours
                     .forEach(neighbour => {
-                        this.paintThinLineBetweenCells(cell, neighbour, 2.5);
+                        this.paintThinLineBetweenCells(cell, neighbour);
                     });
             });
 
         this.cellsWithOneLivingDiagonalNeihbours(livingCells).forEach(cell => {
             this.cellsWithOneLivingDiagonalNeihbours(cell.orthogonalNeighbours.filter(neighbour => neighbour.isAlive))
-                .forEach(neighbour => this.paintThinLineBetweenCells(cell, neighbour, 2.5));
+                .forEach(neighbour => this.paintThinLineBetweenCells(cell, neighbour));
         });
 
 
