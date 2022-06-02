@@ -4,6 +4,8 @@ import { CircleCellPainter } from './circlecellpainter';
 import { ClassicCellPainter } from './classiccellpainter';
 import { ConnectionPainter } from './connectionPainter';
 import { MoleculeCellPainter } from './moleculecellpainter';
+import { MoleculeCellPainterFive } from './moleculecellpainterfive';
+import { MoleculeCellPainterFour } from './moleculecellpainterfour';
 import { MoleculeCellPainterThree } from './moleculecellpainterthree';
 import { MoleculeCellPainterTwo } from './moleculecellpaintertwo';
 import { OldRoundedCellPainter } from './oldroundedcellpainter';
@@ -24,6 +26,8 @@ export class CellPainterProvider {
             case 'molecule': return new MoleculeCellPainter();
             case 'moleculeTwo': return new MoleculeCellPainterTwo();
             case 'moleculeThree': return new MoleculeCellPainterThree();
+            case 'moleculeFour': return new MoleculeCellPainterFour();
+            case 'moleculeFive': return new MoleculeCellPainterFive();
             case 'connection': return new ConnectionPainter();
             default: return new ClassicCellPainter();
         }

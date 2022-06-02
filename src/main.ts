@@ -49,8 +49,8 @@ function changeCellPainter(cellPaintertype: string): void {
 }
 
 function canvasLeftClicked(event: MouseEvent, canvasId: string): void {
-    const coordinate: Coordinate =  getMouseCoordinate(event, canvasId);
-    grid.cellAt(Math.floor(coordinate.x/20),Math.floor(coordinate.y/20)).toggleLifeDeath();
+    const coordinate: Coordinate = getMouseCoordinate(event, canvasId);
+    grid.cellAt(Math.floor(coordinate.x / 20), Math.floor(coordinate.y / 20)).toggleLifeDeath();
     view.redrawGrid(grid);
 }
 
@@ -58,7 +58,12 @@ function getMouseCoordinate(event: MouseEvent, elementId: string): Coordinate {
     const rect: DOMRect = document.getElementById(elementId).getBoundingClientRect();
     const x: number = event.clientX - rect.left;
     const y: number = event.clientY - rect.top;
-    return new Coordinate(x,y);
+    return new Coordinate(x, y);
+}
+
+function killAll(): void {
+    grid.killAll();
+    view.redrawGrid(grid);
 }
 
 document.getElementById('evolveButton').addEventListener('click', () => evolveAndPaint());
@@ -71,7 +76,11 @@ document.getElementById('rainbowButton').addEventListener('click', () => changeC
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
 document.getElementById('moleculeTwoButton').addEventListener('click', () => changeCellPainter('moleculeTwo'));
 document.getElementById('moleculeThreeButton').addEventListener('click', () => changeCellPainter('moleculeThree'));
+document.getElementById('moleculeFourButton').addEventListener('click', () => changeCellPainter('moleculeFour'));
+document.getElementById('moleculeFiveButton').addEventListener('click', () => changeCellPainter('moleculeFive'));
 document.getElementById('connectionButton').addEventListener('click', () => changeCellPainter('connection'));
+
+document.getElementById('killAllButton').addEventListener('click', () => killAll());
 
 document.getElementById('myCanvas')
     .addEventListener('click', (event) => canvasLeftClicked(event, (event.target as Element).id));

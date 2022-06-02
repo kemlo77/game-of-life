@@ -90,7 +90,9 @@ export class Grid {
         this.allCells().forEach(cell => cell.executeFate());
     }
 
-
+    killAll(): void {
+        this.allCells().forEach(cell => cell.die());
+    }
 
 
 
