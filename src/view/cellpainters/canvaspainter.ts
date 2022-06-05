@@ -20,11 +20,11 @@ export class CanvasPainter {
     }
 
     protected paintMediumGreenLineBetweenCells(cell1: Cell, cell2: Cell): void {
-        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth * 0.6, this.green,false);
+        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth * 0.6, this.green, false);
     }
 
     protected paintMediumShadowLineBetweenCells(cell1: Cell, cell2: Cell): void {
-        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth * 0.6, this.gray,true);
+        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth * 0.6, this.gray, true);
     }
 
     protected paintThinLineBetweenCells(cell1: Cell, cell2: Cell): void {
@@ -33,7 +33,7 @@ export class CanvasPainter {
 
     protected paintLineBetweenCells(cell1: Cell, cell2: Cell, width: number, color: string, offset: boolean): void {
         let shadowOffset: number = 0;
-        if(offset) {
+        if (offset) {
             shadowOffset = this.gridCellWidth * 0.1;
         }
         this.canvasCtx.strokeStyle = color;
@@ -72,7 +72,7 @@ export class CanvasPainter {
 
     protected paintCircles(cells: Cell[], color: string, width: number, offset: boolean): void {
         let shadowOffset: number = 0;
-        if(offset) {
+        if (offset) {
             shadowOffset = this.gridCellWidth * 0.1;
         }
         const radius: number = width;

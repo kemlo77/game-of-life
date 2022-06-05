@@ -66,6 +66,16 @@ function killAll(): void {
     view.redrawGrid(grid);
 }
 
+function keyPressed(event: KeyboardEvent): void {
+    switch (event.key) {
+        case '1': changeCellPainter('classic'); break;
+        case '2': changeCellPainter('circle'); break;
+        case '3': changeCellPainter('rounded'); break;
+        case '4': changeCellPainter('oldRounded'); break;
+        case 'e': evolveAndPaint(); break;
+    }
+}
+
 document.getElementById('evolveButton').addEventListener('click', () => evolveAndPaint());
 document.getElementById('classicButton').addEventListener('click', () => changeCellPainter('classic'));
 document.getElementById('circleButton').addEventListener('click', () => changeCellPainter('circle'));
@@ -81,3 +91,5 @@ document.getElementById('killAllButton').addEventListener('click', () => killAll
 
 document.getElementById('myCanvas')
     .addEventListener('click', (event) => canvasLeftClicked(event, (event.target as Element).id));
+
+document.addEventListener('keydown', (event) => keyPressed(event));
