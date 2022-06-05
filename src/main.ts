@@ -74,10 +74,8 @@ document.getElementById('oldRoundedButton').addEventListener('click', () => chan
 document.getElementById('agedButton').addEventListener('click', () => changeCellPainter('aged'));
 document.getElementById('neigboursButton').addEventListener('click', () => changeCellPainter('neighbours'));
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
-document.getElementById('moleculeTwoButton').addEventListener('click', () => changeCellPainter('moleculeTwo'));
 document.getElementById('moleculeThreeButton').addEventListener('click', () => changeCellPainter('moleculeThree'));
 document.getElementById('moleculeFourButton').addEventListener('click', () => changeCellPainter('moleculeFour'));
-document.getElementById('moleculeFiveButton').addEventListener('click', () => changeCellPainter('moleculeFive'));
 
 document.getElementById('killAllButton').addEventListener('click', () => killAll());
 

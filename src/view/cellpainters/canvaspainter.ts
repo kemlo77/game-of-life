@@ -4,6 +4,8 @@ import { Coordinate } from '../coordinate';
 export class CanvasPainter {
     private white: string = 'rgba(255,255,255,1)';
     private black: string = 'rgba(0,0,0,1)';
+    private green: string = 'rgba(0,255,0,1)';
+    private gray: string = 'rgba(128,128,128,1)';
 
     protected canvasElement: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
     protected canvasCtx: CanvasRenderingContext2D = this.canvasElement.getContext('2d');
@@ -14,28 +16,45 @@ export class CanvasPainter {
     }
 
     protected paintWideLineBetweenCells(cell1: Cell, cell2: Cell): void {
-        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth, this.black);
+        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth, this.black, false);
+    }
+
+    protected paintMediumGreenLineBetweenCells(cell1: Cell, cell2: Cell): void {
+        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth * 0.6, this.green,false);
+    }
+
+    protected paintMediumShadowLineBetweenCells(cell1: Cell, cell2: Cell): void {
+        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth * 0.6, this.gray,true);
     }
 
     protected paintThinLineBetweenCells(cell1: Cell, cell2: Cell): void {
-        this.paintLineBetweenCells(cell1, cell2, 2.5, this.black);
+        this.paintLineBetweenCells(cell1, cell2, 2.5, this.black, false);
     }
 
-    protected paintLineBetweenCells(cell1: Cell, cell2: Cell, width: number, color: string): void {
+    protected paintLineBetweenCells(cell1: Cell, cell2: Cell, width: number, color: string, offset: boolean): void {
+        let shadowOffset: number = 0;
+        if(offset) {
+            shadowOffset = this.gridCellWidth * 0.1;
+        }
         this.canvasCtx.strokeStyle = color;
         const centerOfCell1: Coordinate = this.centerOfCell(cell1);
         const centerOfCell2: Coordinate = this.centerOfCell(cell2);
         this.canvasCtx.lineWidth = width;
         this.canvasCtx.lineCap = 'round';
         this.canvasCtx.beginPath();
-        this.canvasCtx.moveTo(centerOfCell1.x, centerOfCell1.y);
-        this.canvasCtx.lineTo(centerOfCell2.x, centerOfCell2.y);
+        this.canvasCtx.moveTo(centerOfCell1.x + shadowOffset, centerOfCell1.y + shadowOffset);
+        this.canvasCtx.lineTo(centerOfCell2.x + shadowOffset, centerOfCell2.y + shadowOffset);
         this.canvasCtx.stroke();
     }
 
     paintCellsAsHollowDots(cells: Cell[], outerColor: string, innerColor: string): void {
-        this.paintCircles(cells, outerColor, this.gridCellWidth * 0.32);
-        this.paintCircles(cells, innerColor, this.gridCellWidth * 0.2);
+        this.paintCircles(cells, outerColor, this.gridCellWidth * 0.32, false);
+        this.paintCircles(cells, innerColor, this.gridCellWidth * 0.2, false);
+    }
+
+    paintCellsAsSmallHollowDots(cells: Cell[], outerColor: string, innerColor: string): void {
+        this.paintCircles(cells, outerColor, this.gridCellWidth * 0.25, false);
+        this.paintCircles(cells, innerColor, this.gridCellWidth * 0.05, false);
     }
 
 
@@ -44,20 +63,24 @@ export class CanvasPainter {
     protected paintBlackCircle(cell: Cell): void { this.paintBlackCircles([cell]); }
 
     protected paintWhiteCircles(cells: Cell[]): void {
-        this.paintCircles(cells, this.white, this.gridCellWidth / 2);
+        this.paintCircles(cells, this.white, this.gridCellWidth * 0.5, false);
     }
 
     protected paintBlackCircles(cells: Cell[]): void {
-        this.paintCircles(cells, this.black, this.gridCellWidth / 2);
+        this.paintCircles(cells, this.black, this.gridCellWidth * 0.5, false);
     }
 
-    protected paintCircles(cells: Cell[], color: string, width: number): void {
+    protected paintCircles(cells: Cell[], color: string, width: number, offset: boolean): void {
+        let shadowOffset: number = 0;
+        if(offset) {
+            shadowOffset = this.gridCellWidth * 0.1;
+        }
         const radius: number = width;
         this.canvasCtx.fillStyle = color;
         cells.forEach(cell => {
             const center: Coordinate = this.centerOfCell(cell);
             this.canvasCtx.beginPath();
-            this.canvasCtx.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+            this.canvasCtx.arc(center.x + shadowOffset, center.y + shadowOffset, radius, 0, 2 * Math.PI);
             this.canvasCtx.fill();
         });
     }

@@ -20,7 +20,8 @@ export class MoleculeCellPainterThree extends CanvasPainter implements CellPaint
                     stepBackwards();
                 }
                 const randomNeighbour: Cell = randomUnconnectedNeighbour(currentCell());
-                this.paintThinLineBetweenCells(currentCell(), randomNeighbour);
+                this.paintMediumShadowLineBetweenCells(currentCell(), randomNeighbour);
+                this.paintMediumGreenLineBetweenCells(currentCell(), randomNeighbour);
                 connectCell(randomNeighbour);
             }
 
@@ -62,8 +63,11 @@ export class MoleculeCellPainterThree extends CanvasPainter implements CellPaint
 
 
 
-
-        this.paintCellsAsHollowDots(grid.allLiveCells(), 'rgba(0,0,0,1)', 'rgba(128,255,128,1)');
+        const lonleyCells: Cell[] = grid.allLiveCells().filter(cell => cell.livingNeighbours.length == 0);
+        this.paintCircles(lonleyCells, 'rgba(128,128,128,1)', 7, true);
+        this.paintCircles(lonleyCells, 'rgba(0,255,0,1)', 7, false);
+        
+        //this.paintCellsAsSmallHollowDots(grid.allLiveCells(), 'rgba(0,255,0,1)', 'rgba(0,0,0,1)');
     }
 
 
