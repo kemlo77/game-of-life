@@ -3,7 +3,7 @@ import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
-export class MoleculeCellPainterThree extends CanvasPainter implements CellPainter {
+export class RibbonPainter extends CanvasPainter implements CellPainter {
 
     plotCells(grid: Grid): void {
 
@@ -66,7 +66,7 @@ export class MoleculeCellPainterThree extends CanvasPainter implements CellPaint
         const lonleyCells: Cell[] = grid.allLiveCells().filter(cell => cell.livingNeighbours.length == 0);
         this.paintCircles(lonleyCells, 'rgba(128,128,128,1)', 7, true);
         this.paintCircles(lonleyCells, 'rgba(0,255,0,1)', 7, false);
-        
+
         //this.paintCellsAsSmallHollowDots(grid.allLiveCells(), 'rgba(0,255,0,1)', 'rgba(0,0,0,1)');
     }
 

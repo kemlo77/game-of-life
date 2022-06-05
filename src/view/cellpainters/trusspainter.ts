@@ -2,7 +2,7 @@ import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
-export class MoleculeCellPainter extends CanvasPainter implements CellPainter {
+export class TrussPainter extends CanvasPainter implements CellPainter {
 
     plotCells(grid: Grid): void {
 

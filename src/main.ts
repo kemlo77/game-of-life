@@ -68,24 +68,28 @@ function killAll(): void {
 
 function keyPressed(event: KeyboardEvent): void {
     switch (event.key) {
-        case '1': changeCellPainter('classic'); break;
-        case '2': changeCellPainter('circle'); break;
-        case '3': changeCellPainter('rounded'); break;
-        case '4': changeCellPainter('oldRounded'); break;
         case 'e': evolveAndPaint(); break;
+        case 'r': changeCellPainter('ribbon'); break;
+        case 't': changeCellPainter('truss'); break;
+        case 'a': changeCellPainter('aged'); break;
+        case 's': changeCellPainter('smooth'); break;
+        case 'd': changeCellPainter('circular'); break;
+        case 'f': changeCellPainter('molecule'); break;
+        case 'x': killAll(); break;
+        case 'c': changeCellPainter('classic'); break;
+        case 'v': changeCellPainter('neighbours'); break;
     }
 }
 
 document.getElementById('evolveButton').addEventListener('click', () => evolveAndPaint());
 document.getElementById('classicButton').addEventListener('click', () => changeCellPainter('classic'));
-document.getElementById('circleButton').addEventListener('click', () => changeCellPainter('circle'));
-document.getElementById('roundedButton').addEventListener('click', () => changeCellPainter('rounded'));
-document.getElementById('oldRoundedButton').addEventListener('click', () => changeCellPainter('oldRounded'));
+document.getElementById('circularButton').addEventListener('click', () => changeCellPainter('circular'));
+document.getElementById('smoothButton').addEventListener('click', () => changeCellPainter('smooth'));
 document.getElementById('agedButton').addEventListener('click', () => changeCellPainter('aged'));
 document.getElementById('neigboursButton').addEventListener('click', () => changeCellPainter('neighbours'));
+document.getElementById('trussButton').addEventListener('click', () => changeCellPainter('truss'));
+document.getElementById('ribbonButton').addEventListener('click', () => changeCellPainter('ribbon'));
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
-document.getElementById('moleculeThreeButton').addEventListener('click', () => changeCellPainter('moleculeThree'));
-document.getElementById('moleculeFourButton').addEventListener('click', () => changeCellPainter('moleculeFour'));
 
 document.getElementById('killAllButton').addEventListener('click', () => killAll());
 

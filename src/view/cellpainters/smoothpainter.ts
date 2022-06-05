@@ -3,7 +3,7 @@ import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
-export class RoundedCellPainter extends CanvasPainter implements CellPainter {
+export class SmoothCellPainter extends CanvasPainter implements CellPainter {
 
     plotCells(grid: Grid): void {
         const livingCells: Cell[] = grid.allLiveCells();

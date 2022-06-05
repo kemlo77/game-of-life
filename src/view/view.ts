@@ -1,10 +1,10 @@
 import { Grid } from '../model/grid';
 import { CellPainter } from './cellpainters/cellpainter';
-import { MoleculeCellPainter } from './cellpainters/moleculecellpainter';
+import { TrussPainter } from './cellpainters/trusspainter';
 
 export class View {
 
-    private _cellPainter: CellPainter = new MoleculeCellPainter();
+    private _cellPainter: CellPainter = new TrussPainter();
 
     set cellPainter(cellPainter: CellPainter) {
         this._cellPainter = cellPainter;

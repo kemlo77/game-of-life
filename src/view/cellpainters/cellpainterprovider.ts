@@ -1,13 +1,12 @@
 import { AgedCellPainter } from './agedcellpainter';
 import { CellPainter } from './cellpainter';
-import { CircleCellPainter } from './circlecellpainter';
+import { CircularCellPainter } from './circularcellpainter';
 import { ClassicCellPainter } from './classiccellpainter';
-import { MoleculeCellPainter } from './moleculecellpainter';
-import { MoleculeCellPainterFour } from './moleculecellpainterfour';
-import { MoleculeCellPainterThree } from './moleculecellpainterthree';
+import { TrussPainter } from './trusspainter';
+import { MoleculePainter } from './moleculepainter';
+import { RibbonPainter } from './ribbonpainter';
 import { NeighboursCellPainter } from './neighbourscellpainter';
-import { OldRoundedCellPainter } from './oldroundedcellpainter';
-import { RoundedCellPainter } from './roundedcellpainter';
+import { SmoothCellPainter } from './smoothpainter';
 
 //TODO: döpa om till factory?
 export class CellPainterProvider {
@@ -15,14 +14,13 @@ export class CellPainterProvider {
 
     static getCellPainter(painterType: string): CellPainter {
         switch (painterType) {
-            case 'circle': return new CircleCellPainter();
-            case 'rounded': return new RoundedCellPainter();
-            case 'oldRounded': return new OldRoundedCellPainter();
+            case 'circular': return new CircularCellPainter();
+            case 'smooth': return new SmoothCellPainter();
             case 'aged': return new AgedCellPainter();
             case 'neighbours': return new NeighboursCellPainter();
-            case 'molecule': return new MoleculeCellPainter();
-            case 'moleculeThree': return new MoleculeCellPainterThree();
-            case 'moleculeFour': return new MoleculeCellPainterFour();
+            case 'truss': return new TrussPainter();
+            case 'ribbon': return new RibbonPainter();
+            case 'molecule': return new MoleculePainter();
             default: return new ClassicCellPainter();
         }
     }
