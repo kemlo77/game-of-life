@@ -71,7 +71,7 @@ function keyPressed(event: KeyboardEvent): void {
         case 'e': evolveAndPaint(); break;
         case 'r': changeCellPainter('ribbon'); break;
         case 't': changeCellPainter('truss'); break;
-        case 'a': changeCellPainter('aged'); break;
+        case 'a': changeCellPainter('age'); break;
         case 's': changeCellPainter('smooth'); break;
         case 'd': changeCellPainter('circular'); break;
         case 'f': changeCellPainter('molecule'); break;
@@ -85,8 +85,8 @@ document.getElementById('evolveButton').addEventListener('click', () => evolveAn
 document.getElementById('classicButton').addEventListener('click', () => changeCellPainter('classic'));
 document.getElementById('circularButton').addEventListener('click', () => changeCellPainter('circular'));
 document.getElementById('smoothButton').addEventListener('click', () => changeCellPainter('smooth'));
-document.getElementById('agedButton').addEventListener('click', () => changeCellPainter('aged'));
-document.getElementById('neigboursButton').addEventListener('click', () => changeCellPainter('neighbours'));
+document.getElementById('cellAgeButton').addEventListener('click', () => changeCellPainter('age'));
+document.getElementById('neigbourcountButton').addEventListener('click', () => changeCellPainter('neighbours'));
 document.getElementById('trussButton').addEventListener('click', () => changeCellPainter('truss'));
 document.getElementById('ribbonButton').addEventListener('click', () => changeCellPainter('ribbon'));
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));

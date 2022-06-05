@@ -1,11 +1,11 @@
-import { AgedCellPainter } from './agedcellpainter';
+import { CellAgePainter } from './cellagepainter';
 import { CellPainter } from './cellpainter';
 import { CircularCellPainter } from './circularcellpainter';
 import { ClassicCellPainter } from './classiccellpainter';
 import { TrussPainter } from './trusspainter';
 import { MoleculePainter } from './moleculepainter';
 import { RibbonPainter } from './ribbonpainter';
-import { NeighboursCellPainter } from './neighbourscellpainter';
+import { NeighboursCountPainter } from './neighbourcountpainter';
 import { SmoothCellPainter } from './smoothpainter';
 
 //TODO: döpa om till factory?
@@ -16,8 +16,8 @@ export class CellPainterProvider {
         switch (painterType) {
             case 'circular': return new CircularCellPainter();
             case 'smooth': return new SmoothCellPainter();
-            case 'aged': return new AgedCellPainter();
-            case 'neighbours': return new NeighboursCellPainter();
+            case 'age': return new CellAgePainter();
+            case 'neighbours': return new NeighboursCountPainter();
             case 'truss': return new TrussPainter();
             case 'ribbon': return new RibbonPainter();
             case 'molecule': return new MoleculePainter();

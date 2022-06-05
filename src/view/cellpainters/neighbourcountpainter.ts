@@ -3,7 +3,7 @@ import { Grid } from '../../model/grid';
 import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
-export class NeighboursCellPainter extends CanvasPainter implements CellPainter {
+export class NeighboursCountPainter extends CanvasPainter implements CellPainter {
 
 
 
