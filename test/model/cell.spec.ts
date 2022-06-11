@@ -180,8 +180,8 @@ describe('cells', () => {
 
     it('cell has coordinate', () => {
         const cell: Cell = new Cell(0, 1);
-        expect(cell.x).to.equal(0);
-        expect(cell.y).to.equal(1);
+        expect(cell.columnIndex).to.equal(0);
+        expect(cell.rowIndex).to.equal(1);
     });
 
 

@@ -53,10 +53,10 @@ describe('grid', () => {
 
     it('cell xy', () => {
         const grid: Grid = new Grid(4, 5);
-        expect(grid.cellAt(0, 1).x).to.equal(0);
-        expect(grid.cellAt(0, 1).y).to.equal(1);
-        expect(grid.cellAt(3, 2).x).to.equal(3);
-        expect(grid.cellAt(3, 2).y).to.equal(2);
+        expect(grid.cellAt(0, 1).columnIndex).to.equal(0);
+        expect(grid.cellAt(0, 1).rowIndex).to.equal(1);
+        expect(grid.cellAt(3, 2).columnIndex).to.equal(3);
+        expect(grid.cellAt(3, 2).rowIndex).to.equal(2);
     });
 
     it('blinker blinks', () => {

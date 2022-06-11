@@ -62,8 +62,11 @@ function getMouseCoordinate(event: MouseEvent, elementId: string): Coordinate {
 }
 
 function killAll(): void {
-    grid.killAll();
-    view.redrawGrid(grid);
+    const reallyKillAll: boolean = confirm('Do you want to kill every cell?');
+    if (reallyKillAll) {
+        grid.killAll();
+        view.redrawGrid(grid);
+    }    
 }
 
 function keyPressed(event: KeyboardEvent): void {
