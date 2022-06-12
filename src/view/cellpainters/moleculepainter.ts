@@ -26,7 +26,7 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
             });
 
         this.cellsWithOneLivingOrthogonalNeihbours(livingCells).forEach(cell => {
-            this.cellsWithOneLivingOrthogonalNeihbours(cell.diagonalNeighbours.filter(neighbour => neighbour.isAlive))
+            this.cellsWithOneLivingOrthogonalNeihbours(cell.livingDiagonalNeighbours)
                 .forEach(neighbour => this.paintThinLineBetweenCells(cell, neighbour));
         });
 

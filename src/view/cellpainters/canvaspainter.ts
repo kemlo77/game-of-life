@@ -48,29 +48,29 @@ export class CanvasPainter {
     }
 
     paintCellsAsHollowDots(cells: Cell[], outerColor: string, innerColor: string): void {
-        this.paintCircles(cells, outerColor, this.gridCellWidth * 0.32, false);
-        this.paintCircles(cells, innerColor, this.gridCellWidth * 0.2, false);
+        this.paintCirclesDeep(cells, outerColor, this.gridCellWidth * 0.32, false);
+        this.paintCirclesDeep(cells, innerColor, this.gridCellWidth * 0.2, false);
     }
 
-    paintCellsAsSmallHollowDots(cells: Cell[], outerColor: string, innerColor: string): void {
-        this.paintCircles(cells, outerColor, this.gridCellWidth * 0.25, false);
-        this.paintCircles(cells, innerColor, this.gridCellWidth * 0.05, false);
+    protected paintCircles(cells: Cell[], color: string, width?: number): void {
+        if  (typeof width == 'undefined') {
+            this.paintCirclesDeep(cells, color, this.gridCellWidth * 0.5, false);
+        } else {
+            this.paintCirclesDeep(cells, color, width * 0.5, false);
+        }
     }
 
-
-    protected paintWhiteCircle(cell: Cell): void { this.paintWhiteCircles([cell]); }
-
-    protected paintBlackCircle(cell: Cell): void { this.paintBlackCircles([cell]); }
-
-    protected paintWhiteCircles(cells: Cell[]): void {
-        this.paintCircles(cells, this.white, this.gridCellWidth * 0.5, false);
+    protected paintShadowedCircles(cells: Cell[], color: string, width?: number): void {
+        if  (typeof width == 'undefined') {
+            this.paintCirclesDeep(cells, 'rgba(128,128,128,1)', this.gridCellWidth * 0.5, true);
+            this.paintCirclesDeep(cells, color, this.gridCellWidth * 0.5, false);
+        } else {
+            this.paintCirclesDeep(cells, 'rgba(128,128,128,1)', width * 0.5, true);
+            this.paintCirclesDeep(cells, color, width * 0.5, false);
+        }
     }
 
-    protected paintBlackCircles(cells: Cell[]): void {
-        this.paintCircles(cells, this.black, this.gridCellWidth * 0.5, false);
-    }
-
-    protected paintCircles(cells: Cell[], color: string, width: number, offset: boolean): void {
+    private paintCirclesDeep(cells: Cell[], color: string, width: number, offset: boolean): void {
         let shadowOffset: number = 0;
         if (offset) {
             shadowOffset = this.gridCellWidth * 0.1;

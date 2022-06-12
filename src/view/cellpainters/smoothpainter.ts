@@ -19,11 +19,11 @@ export class SmoothCellPainter extends CanvasPainter implements CellPainter {
             livingCell.deadNeighbours
                 .filter(deadCell => deadCell.livingOrthogonalNeighbours.length >= 3)
                 .forEach(deadCell => {
-                    this.paintWhiteCircle(deadCell);
+                    this.paintCircles([deadCell], 'rgba(255,255,255,1');
                 });
         });
 
-        this.paintBlackCircles(livingCells);
+        this.paintCircles(livingCells,'rgba(0,0,0,1');
     }
 
 }

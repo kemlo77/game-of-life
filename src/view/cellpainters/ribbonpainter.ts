@@ -17,8 +17,7 @@ export class RibbonPainter extends CanvasPainter implements CellPainter {
         });
 
         const lonleyCells: Cell[] = grid.allLiveCells.filter(cell => cell.livingNeighbours.length == 0);
-        this.paintCircles(lonleyCells, 'rgba(128,128,128,1)', 7, true);
-        this.paintCircles(lonleyCells, 'rgba(0,255,0,1)', 7, false);
+        this.paintShadowedCircles(lonleyCells, 'rgba(0,255,0,1)', 14);
     }
     
 
