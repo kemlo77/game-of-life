@@ -2,7 +2,6 @@ import { CellAgePainter } from './cellagepainter';
 import { CellPainter } from './cellpainter';
 import { CircularCellPainter } from './circularcellpainter';
 import { ClassicCellPainter } from './classiccellpainter';
-import { TrussPainter } from './trusspainter';
 import { MoleculePainter } from './moleculepainter';
 import { RibbonPainter } from './ribbonpainter';
 import { NeighboursCountPainter } from './neighbourcountpainter';
@@ -18,7 +17,6 @@ export class CellPainterProvider {
             case 'smooth': return new SmoothCellPainter();
             case 'age': return new CellAgePainter();
             case 'neighbours': return new NeighboursCountPainter();
-            case 'truss': return new TrussPainter();
             case 'ribbon': return new RibbonPainter();
             case 'molecule': return new MoleculePainter();
             default: return new ClassicCellPainter();

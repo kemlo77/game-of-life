@@ -21,20 +21,19 @@ export class Grid {
         return this._grid[y][x];
     }
 
-    allCells(): Cell[] {
+    get allCells(): Cell[] {
         return this._grid.flat();
     }
 
-    //TODO: fundera över att använda en getter istället
-    allLiveCells(): Cell[] {
-        return this.allCells().filter(cell => cell.isAlive);
+    get allLiveCells(): Cell[] {
+        return this.allCells.filter(cell => cell.isAlive);
     }
 
     get clusters(): Cell[][] {
         const clusterArray: Cell[][] = [];
         const alreadyChecked: Set<Cell> = new Set();
 
-        for (const livingCell of this.allLiveCells()) {
+        for (const livingCell of this.allLiveCells) {
             if (alreadyChecked.has(livingCell)) {
                 continue;
             }
@@ -74,9 +73,9 @@ export class Grid {
 
 
     private connectCellsWithNeighbours(): void {
-        this.allCells().forEach(currentCell => {
+        this.allCells.forEach(currentCell => {
 
-            this.allCells()
+            this.allCells
                 .filter(cell => cell !== currentCell)
                 .filter(cell => Math.abs(currentCell.columnIndex - cell.columnIndex) <= 1)
                 .filter(cell => Math.abs(currentCell.rowIndex - cell.rowIndex) <= 1)
@@ -86,12 +85,12 @@ export class Grid {
     }
 
     evolve(): void {
-        this.allCells().forEach(cell => cell.planFate());
-        this.allCells().forEach(cell => cell.executeFate());
+        this.allCells.forEach(cell => cell.planFate());
+        this.allCells.forEach(cell => cell.executeFate());
     }
 
     killAll(): void {
-        this.allCells().forEach(cell => cell.die());
+        this.allCells.forEach(cell => cell.die());
     }
 
 

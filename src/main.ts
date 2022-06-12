@@ -73,7 +73,6 @@ function keyPressed(event: KeyboardEvent): void {
     switch (event.key) {
         case 'e': evolveAndPaint(); break;
         case 'r': changeCellPainter('ribbon'); break;
-        case 't': changeCellPainter('truss'); break;
         case 'a': changeCellPainter('age'); break;
         case 's': changeCellPainter('smooth'); break;
         case 'd': changeCellPainter('circular'); break;
@@ -90,7 +89,6 @@ document.getElementById('circularButton').addEventListener('click', () => change
 document.getElementById('smoothButton').addEventListener('click', () => changeCellPainter('smooth'));
 document.getElementById('cellAgeButton').addEventListener('click', () => changeCellPainter('age'));
 document.getElementById('neigbourcountButton').addEventListener('click', () => changeCellPainter('neighbours'));
-document.getElementById('trussButton').addEventListener('click', () => changeCellPainter('truss'));
 document.getElementById('ribbonButton').addEventListener('click', () => changeCellPainter('ribbon'));
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
 

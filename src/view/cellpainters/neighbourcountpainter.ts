@@ -9,7 +9,7 @@ export class NeighboursCountPainter extends CanvasPainter implements CellPainter
 
 
     plotCells(grid: Grid): void {
-        grid.allLiveCells().forEach(cell => {
+        grid.allLiveCells.forEach(cell => {
             this.paintSquares([cell], this.colorGivenNumberOfNeighboursToOfCell(cell));
         });
     }

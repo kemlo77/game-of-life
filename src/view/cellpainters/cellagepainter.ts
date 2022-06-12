@@ -7,7 +7,7 @@ import { CellPainter } from './cellpainter';
 export class CellAgePainter extends CanvasPainter implements CellPainter {
 
     plotCells(grid: Grid): void {
-        grid.allLiveCells().forEach(cell => {
+        grid.allLiveCells.forEach(cell => {
             this.paintSquares([cell], this.colorGivenTheAgeOfCell(cell));
         });
     }

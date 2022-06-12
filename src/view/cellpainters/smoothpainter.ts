@@ -6,7 +6,7 @@ import { CellPainter } from './cellpainter';
 export class SmoothCellPainter extends CanvasPainter implements CellPainter {
 
     plotCells(grid: Grid): void {
-        const livingCells: Cell[] = grid.allLiveCells();
+        const livingCells: Cell[] = grid.allLiveCells;
 
         livingCells.forEach(livingCell => {
             livingCell.livingNeighbours
