@@ -7,7 +7,7 @@ export class ClassicCellPainter extends CanvasPainter implements CellPainter {
 
 
     plotCells(grid: Grid): void {
-        this.paintSquares(grid.allLiveCells, 'rgba(0,0,0,1)');
+        this.paintSquares(grid.allLiveCells, this.black);
     }
 
 }

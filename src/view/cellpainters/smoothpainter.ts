@@ -11,7 +11,7 @@ export class SmoothCellPainter extends CanvasPainter implements CellPainter {
         livingCells.forEach(livingCell => {
             livingCell.livingNeighbours
                 .forEach(livingNeighbourCell => {
-                    this.paintWideLineBetweenCells(livingCell, livingNeighbourCell);
+                    this.paintLineBetweenCells(livingCell, livingNeighbourCell, this.wideLineWidth);
                 });
         });
 
@@ -23,7 +23,7 @@ export class SmoothCellPainter extends CanvasPainter implements CellPainter {
                 });
         });
 
-        this.paintCircles(livingCells,this.black);
+        this.paintCircles(livingCells, this.black);
     }
 
 }

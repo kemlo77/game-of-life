@@ -13,7 +13,7 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
             .forEach(cell => {
                 cell.livingOrthogonalNeighbours
                     .forEach(neighbour => {
-                        this.paintThinLineBetweenCells(cell, neighbour);
+                        this.paintLineBetweenCells(cell, neighbour);
                     });
             });
 
@@ -21,15 +21,15 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
             .forEach(cell => {
                 cell.livingDiagonalNeighbours
                     .forEach(neighbour => {
-                        this.paintThinLineBetweenCells(cell, neighbour);
+                        this.paintLineBetweenCells(cell, neighbour);
                     });
             });
 
         this.cellsWithOneLivingOrthogonalNeihbours(livingCells).forEach(cell => {
             cell.livingDiagonalNeighbours
                 .forEach(neighbour => {
-                    if (this.cellsHaveNoCommonLivingOrthogonalNeighbours(cell,neighbour)) {
-                        this.paintThinLineBetweenCells(cell, neighbour);
+                    if (this.cellsHaveNoCommonLivingOrthogonalNeighbours(cell, neighbour)) {
+                        this.paintLineBetweenCells(cell, neighbour);
                     }
                 });
         });
@@ -49,7 +49,7 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
         this.cellsWithOneLivingOrthogonalNeihbours(livingCells).forEach(cell => {
             cell.livingDiagonalNeighbours
                 .forEach(neighbour => {
-                    if (this.cellsHaveNoCommonLivingOrthogonalNeighbours(cell,neighbour)) {
+                    if (this.cellsHaveNoCommonLivingOrthogonalNeighbours(cell, neighbour)) {
                         this.paintCellsAsHollowDots([cell, neighbour], this.gray);
                     }
                 });

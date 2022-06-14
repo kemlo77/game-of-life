@@ -11,15 +11,16 @@ export class RibbonPainter extends CanvasPainter implements CellPainter {
         grid.clusters.forEach(cluster => {
             const randomConnections: CellConnection[] = this.generateMazelikeRandomCellConnections(cluster);
             randomConnections.forEach(connection => {
-                this.paintMediumShadowLineBetweenCells(connection.cell1, connection.cell2);
-                this.paintMediumGreenLineBetweenCells(connection.cell1, connection.cell2);
+                this.paintLineBetweenCells(connection.cell1, connection.cell2, this.mediumLineWidth, this.gray, true);
+                this.paintLineBetweenCells(connection.cell1, connection.cell2, this.mediumLineWidth, this.green);
             });
         });
 
         const lonleyCells: Cell[] = grid.allLiveCells.filter(cell => cell.livingNeighbours.length == 0);
-        this.paintShadowedCircles(lonleyCells, 'rgba(0,255,0,1)', 14);
+        this.paintCircles(lonleyCells, this.gray, this.mediumLineWidth, true);
+        this.paintCircles(lonleyCells, this.green, this.mediumLineWidth, false);
     }
-    
+
 
     private generateMazelikeRandomCellConnections(cluster: Cell[]): CellConnection[] {
         const cellConnections: CellConnection[] = [];
