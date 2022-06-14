@@ -2,10 +2,13 @@ import { Cell } from '../../model/cell';
 import { Coordinate } from '../coordinate';
 
 export class CanvasPainter {
-    private white: string = 'rgba(255,255,255,1)';
-    private black: string = 'rgba(0,0,0,1)';
-    private green: string = 'rgba(0,255,0,1)';
-    private gray: string = 'rgba(128,128,128,1)';
+    protected white: string = 'rgba(255,255,255,1)';
+    protected black: string = 'rgba(0,0,0,1)';
+    protected green: string = 'rgba(0,255,0,1)';
+    protected gray: string = 'rgba(128,128,128,1)';
+    protected orange: string = 'rgba(255,127,0,1)';
+    protected yellow: string = 'rgba(255,255,0,1)';
+    protected lightBlue: string = 'rgba(100,100,255,1)';
 
     protected canvasElement: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
     protected canvasCtx: CanvasRenderingContext2D = this.canvasElement.getContext('2d');
@@ -28,10 +31,16 @@ export class CanvasPainter {
     }
 
     protected paintThinLineBetweenCells(cell1: Cell, cell2: Cell): void {
-        this.paintLineBetweenCells(cell1, cell2, 2.5, this.black, false);
+        this.paintLineBetweenCells(cell1, cell2, this.gridCellWidth * 0.1, this.black, false);
     }
 
-    protected paintLineBetweenCells(cell1: Cell, cell2: Cell, width: number, color: string, offset: boolean): void {
+    protected paintLineBetweenCells(
+        cell1: Cell,
+        cell2: Cell,
+        width: number,
+        color: string = this.black,
+        offset: boolean = false
+    ): void {
         let shadowOffset: number = 0;
         if (offset) {
             shadowOffset = this.gridCellWidth * 0.1;
@@ -47,8 +56,8 @@ export class CanvasPainter {
         this.canvasCtx.stroke();
     }
 
-    paintCellsAsHollowDots(cells: Cell[], outerColor: string, innerColor: string): void {
-        this.paintCirclesDeep(cells, outerColor, this.gridCellWidth * 0.32, false);
+    paintCellsAsHollowDots(cells: Cell[], innerColor: string): void {
+        this.paintCirclesDeep(cells, 'rgba(0,0,0,1)', this.gridCellWidth * 0.32, false);
         this.paintCirclesDeep(cells, innerColor, this.gridCellWidth * 0.2, false);
     }
 
