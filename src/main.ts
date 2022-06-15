@@ -8,6 +8,8 @@ import { Coordinate } from './view/coordinate';
 
 const grid: Grid = new Grid(60, 55);
 const view: View = new View();
+let running: boolean = false;
+let handle: any;
 
 //Glider
 grid.cellAt(15, 1).live();
@@ -37,8 +39,17 @@ grid.cellAt(32, 26).live();
 grid.cellAt(33, 27).live();
 grid.cellAt(32, 28).live();
 
+function toggleRunning(): void {
+    if (running) {
+        running = false;
+        clearInterval(handle);
+    } else {
+        running = true;
+        handle = setInterval(() => takeAStep(), 500);
+    }
+}
 
-function evolveAndPaint(): void {
+function takeAStep(): void {
     grid.evolve();
     view.redrawGrid(grid);
 }
@@ -71,7 +82,8 @@ function killAll(): void {
 
 function keyPressed(event: KeyboardEvent): void {
     switch (event.key) {
-        case 'e': evolveAndPaint(); break;
+        case 'w': toggleRunning(); break;
+        case 'e': takeAStep(); break;
         case 'r': changeCellPainter('ribbon'); break;
         case 'a': changeCellPainter('age'); break;
         case 's': changeCellPainter('smooth'); break;
@@ -83,7 +95,7 @@ function keyPressed(event: KeyboardEvent): void {
     }
 }
 
-document.getElementById('evolveButton').addEventListener('click', () => evolveAndPaint());
+document.getElementById('stepButton').addEventListener('click', () => takeAStep());
 document.getElementById('classicButton').addEventListener('click', () => changeCellPainter('classic'));
 document.getElementById('circularButton').addEventListener('click', () => changeCellPainter('circular'));
 document.getElementById('smoothButton').addEventListener('click', () => changeCellPainter('smooth'));
@@ -91,6 +103,7 @@ document.getElementById('cellAgeButton').addEventListener('click', () => changeC
 document.getElementById('neigbourcountButton').addEventListener('click', () => changeCellPainter('neighbours'));
 document.getElementById('ribbonButton').addEventListener('click', () => changeCellPainter('ribbon'));
 document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
+document.getElementById('startStopButton').addEventListener('click', () => toggleRunning());
 
 document.getElementById('killAllButton').addEventListener('click', () => killAll());
 
