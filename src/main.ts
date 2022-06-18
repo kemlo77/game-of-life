@@ -72,6 +72,16 @@ function getMouseCoordinate(event: MouseEvent, elementId: string): Coordinate {
     return new Coordinate(x, y);
 }
 
+function canvasMouseMovement(event: MouseEvent, canvasId: string): void {
+    const mousePosition: Coordinate = getMouseCoordinate(event, canvasId);
+    view.removePreviousMouseCellPosition();
+    view.drawMouseCellPosition(mousePosition);
+}
+
+function canvasMouseOut(): void {
+    view.removePreviousMouseCellPosition();
+}
+
 function killAll(): void {
     const reallyKillAll: boolean = confirm('Do you want to kill every cell?');
     if (reallyKillAll) {
@@ -107,7 +117,10 @@ document.getElementById('startStopButton').addEventListener('click', () => toggl
 
 document.getElementById('killAllButton').addEventListener('click', () => killAll());
 
-document.getElementById('myCanvas')
+document.getElementById('foreground')
     .addEventListener('click', (event) => canvasLeftClicked(event, (event.target as Element).id));
+document.getElementById('foreground')
+    .addEventListener('mousemove', (event) => canvasMouseMovement(event, (event.target as Element).id));
+document.getElementById('foreground').addEventListener('mouseout', (event) => canvasMouseOut());
 
 document.addEventListener('keydown', (event) => keyPressed(event));

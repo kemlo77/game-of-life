@@ -2,8 +2,8 @@ import { Cell } from '../../model/cell';
 import { Coordinate } from '../coordinate';
 
 export class CanvasPainter {
-    protected canvasElement: HTMLCanvasElement = document.getElementById('myCanvas') as HTMLCanvasElement;
-    protected canvasCtx: CanvasRenderingContext2D = this.canvasElement.getContext('2d');
+    private canvasElement: HTMLCanvasElement = document.getElementById('gridLayer') as HTMLCanvasElement;
+    private canvasCtx: CanvasRenderingContext2D = this.canvasElement.getContext('2d');
 
     protected white: string = 'rgba(255,255,255,1)';
     protected black: string = 'rgba(0,0,0,1)';
@@ -13,7 +13,10 @@ export class CanvasPainter {
     protected yellow: string = 'rgba(255,255,0,1)';
     protected lightBlue: string = 'rgba(100,100,255,1)';
 
-    private gridCellWidth = 20;
+    private _gridCellWidth = 20;
+    get gridCellWidth(): number {
+        return this._gridCellWidth;
+    }
 
     get thinLineWidth(): number {
         return this.gridCellWidth * 0.1;
@@ -91,7 +94,7 @@ export class CanvasPainter {
         });
     }
 
-    private upperLeftCornerOfCell(cell: Cell): Coordinate {
+    protected upperLeftCornerOfCell(cell: Cell): Coordinate {
         const xPart: number = cell.columnIndex * this.gridCellWidth;
         const yPart: number = cell.rowIndex * this.gridCellWidth;
         return new Coordinate(xPart, yPart);
