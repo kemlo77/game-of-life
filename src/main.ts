@@ -6,8 +6,8 @@ import { Coordinate } from './view/coordinate';
 
 
 
-const grid: Grid = new Grid(60, 55);
-const view: View = new View();
+const grid: Grid = new Grid(60, 60);
+const view: View = new View(grid);
 let running: boolean = false;
 let handle: any;
 
@@ -51,18 +51,19 @@ function toggleRunning(): void {
 
 function takeAStep(): void {
     grid.evolve();
-    view.redrawGrid(grid);
+    view.redrawGrid();
 }
 
 function changeCellPainter(cellPaintertype: string): void {
     view.cellPainter = CellPainterProvider.getCellPainter(cellPaintertype);
-    view.redrawGrid(grid);
+    view.redrawGrid();
 }
 
 function canvasLeftClicked(event: MouseEvent, canvasId: string): void {
     const coordinate: Coordinate = getMouseCoordinate(event, canvasId);
-    grid.cellAt(Math.floor(coordinate.x / 20), Math.floor(coordinate.y / 20)).toggleLifeDeath();
-    view.redrawGrid(grid);
+    //TODO: det här kanske borde ligga någon annanstans? Eget  objekt?
+    grid.cellAt(Math.floor(coordinate.x / view.cellWidth), Math.floor(coordinate.y / view.cellWidth)).toggleLifeDeath();
+    view.redrawGrid();
 }
 
 function getMouseCoordinate(event: MouseEvent, elementId: string): Coordinate {
@@ -86,7 +87,7 @@ function killAll(): void {
     const reallyKillAll: boolean = confirm('Do you want to kill every cell?');
     if (reallyKillAll) {
         grid.killAll();
-        view.redrawGrid(grid);
+        view.redrawGrid();
     }    
 }
 
@@ -117,10 +118,12 @@ document.getElementById('startStopButton').addEventListener('click', () => toggl
 
 document.getElementById('killAllButton').addEventListener('click', () => killAll());
 
-document.getElementById('foreground')
-    .addEventListener('click', (event) => canvasLeftClicked(event, (event.target as Element).id));
-document.getElementById('foreground')
-    .addEventListener('mousemove', (event) => canvasMouseMovement(event, (event.target as Element).id));
-document.getElementById('foreground').addEventListener('mouseout', (event) => canvasMouseOut());
+const foreground: HTMLCanvasElement = document.getElementById('foreground') as HTMLCanvasElement;
+foreground.addEventListener('click', (event) => canvasLeftClicked(event, (event.target as Element).id));
+foreground.addEventListener('mousemove', (event) => canvasMouseMovement(event, (event.target as Element).id));
+foreground.addEventListener('mouseout', (event) => canvasMouseOut());
 
 document.addEventListener('keydown', (event) => keyPressed(event));
+
+addEventListener('load', () => view.adjustCanvas());
+addEventListener('resize', () => view.delayedAdjustCanvas());

@@ -18,6 +18,10 @@ export class CanvasPainter {
         return this._gridCellWidth;
     }
 
+    set gridCellWidth(newWidth: number) {
+        this._gridCellWidth = newWidth;
+    }
+
     get thinLineWidth(): number {
         return this.gridCellWidth * 0.1;
     }

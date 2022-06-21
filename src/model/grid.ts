@@ -9,11 +9,11 @@ export class Grid {
         this.connectCellsWithNeighbours();
     }
 
-    get width(): number {
+    get numberOfColumns(): number {
         return this._grid[0].length;
     }
 
-    get height(): number {
+    get numberOfRows(): number {
         return this._grid.length;
     }
 

@@ -1,6 +1,6 @@
-import { Cell } from '../../model/cell';
-import { Coordinate } from '../coordinate';
-import { CanvasPainter } from './canvaspainter';
+import { Cell } from '../model/cell';
+import { Coordinate } from './coordinate';
+import { CanvasPainter } from './cellpainters/canvaspainter';
 
 export class ForegroundPainter extends CanvasPainter {
     private foregroundCanvasElement: HTMLCanvasElement = document.getElementById('foreground') as HTMLCanvasElement;
