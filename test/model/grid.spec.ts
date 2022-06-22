@@ -5,9 +5,9 @@ import { Cell } from '../../src/model/cell';
 describe('grid', () => {
 
     it('there is a grid', () => {
-        const grid: Grid = new Grid(10, 11);
-        expect(grid.width).to.equal(10);
-        expect(grid.height).to.equal(11);
+        const grid: Grid = new Grid(10, 13);
+        expect(grid.numberOfColumns).to.equal(10);
+        expect(grid.numberOfRows).to.equal(13);
     });
 
     it('the grid has cells', () => {

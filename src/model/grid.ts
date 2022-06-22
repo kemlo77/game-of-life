@@ -4,8 +4,8 @@ export class Grid {
 
     private _grid: Cell[][];
 
-    constructor(width: number, height: number) {
-        this._grid = this.generateColumnOfRowOfCells(width, height);
+    constructor(columns: number, rows: number) {
+        this._grid = this.generateColumnOfRowOfCells(columns, rows);
         this.connectCellsWithNeighbours();
     }
 
