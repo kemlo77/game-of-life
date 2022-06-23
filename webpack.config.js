@@ -22,6 +22,14 @@ module.exports = {
             {
                 test: /.css$/i,
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+            {
+                test: /\.html$/,
+                use: ['html-loader']
+            },
+            {
+                test: /\.(jpg|png)$/,
+                type: 'asset/resource'
             }
         ],
     },
@@ -31,7 +39,8 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        clean: true
+        clean: true,
+        assetModuleFilename: 'images/[name].[ext]'
     },
     plugins: [
         new HtmlWebpackPlugin({ template: './src/template.html' }),
