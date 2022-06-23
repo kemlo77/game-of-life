@@ -38,7 +38,7 @@ export class View {
     }
 
     public adjustCanvas(): void {
-        const newCanvasWidth: number = window.innerWidth - 16;
+        const newCanvasWidth: number = window.innerWidth - 32;
         const newCanvasHeight: number = window.innerHeight - 16;
 
         const canvases: NodeListOf<HTMLCanvasElement> = document.querySelectorAll('div#viewport canvas');
@@ -46,6 +46,9 @@ export class View {
             canvas.width = newCanvasWidth;
             canvas.height = newCanvasHeight;
         });
+        const div: HTMLDivElement = document.querySelector('div#viewport') as HTMLDivElement;
+        div.style.height = newCanvasHeight + 'px';
+
         if (newCanvasWidth > newCanvasHeight) {
             this._cellWidth = newCanvasWidth / this._grid.numberOfColumns;
         } else {

@@ -7,6 +7,7 @@ button {
     margin-top: 10px;
     height: 30px;
     width: 110px;
+    text-align: right;
 }
 
 canvas {

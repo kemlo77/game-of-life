@@ -8,7 +8,7 @@ import { NeighboursCountPainter } from './neighbourcountpainter';
 import { SmoothCellPainter } from './smoothpainter';
 
 //TODO: döpa om till factory?
-export class CellPainterProvider {
+export class CellPainterFactory {
 
 
     static getCellPainter(painterType: string): CellPainter {

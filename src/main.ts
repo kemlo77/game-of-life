@@ -1,7 +1,7 @@
 import './style.css';
 import { Grid } from './model/grid';
 import { View } from './view/view';
-import { CellPainterProvider } from './view/cellpainters/cellpainterprovider';
+import { CellPainterFactory } from './view/cellpainters/cellpainterfactory';
 import { Coordinate } from './view/coordinate';
 
 
@@ -26,9 +26,9 @@ grid.cellAt(5, 4).live();
 grid.cellAt(6, 4).live();
 grid.cellAt(7, 4).live();
 
-//corner
+//corners
 grid.cellAt(0, 0).live();
-grid.cellAt(59, 54).live();
+grid.cellAt(59, 59).live();
 
 //xxx
 grid.cellAt(30, 27).live();
@@ -55,13 +55,12 @@ function takeAStep(): void {
 }
 
 function changeCellPainter(cellPaintertype: string): void {
-    view.cellPainter = CellPainterProvider.getCellPainter(cellPaintertype);
+    view.cellPainter = CellPainterFactory.getCellPainter(cellPaintertype);
     view.redrawGrid();
 }
 
 function canvasLeftClicked(event: MouseEvent, canvasId: string): void {
     const coordinate: Coordinate = getMouseCoordinate(event, canvasId);
-    //TODO: det här kanske borde ligga någon annanstans? Eget  objekt?
     grid.cellAt(Math.floor(coordinate.x / view.cellWidth), Math.floor(coordinate.y / view.cellWidth)).toggleLifeDeath();
     view.redrawGrid();
 }
@@ -88,7 +87,7 @@ function killAll(): void {
     if (reallyKillAll) {
         grid.killAll();
         view.redrawGrid();
-    }    
+    }
 }
 
 function keyPressed(event: KeyboardEvent): void {
