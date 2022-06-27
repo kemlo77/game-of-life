@@ -1,5 +1,5 @@
 {
-  "name": "game-of-life",
+  "name": "game-of-life-visualized-differently",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -15,8 +15,8 @@
     "coverageSpecificTest": "nyc mocha test/**/grid.spec.ts",
     "sonar": "node sonar-project.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Fredrik Kemling",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.2.22",
     "@types/mocha": "^9.0.0",
