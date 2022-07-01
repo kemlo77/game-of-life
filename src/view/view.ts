@@ -3,6 +3,7 @@ import { CellPainter } from './cellpainters/cellpainter';
 import { ForegroundPainter } from './foregroundpainter';
 import { SmoothCellPainter } from './cellpainters/smoothpainter';
 import { Coordinate } from './coordinate';
+import { Cell } from '../model/cell';
 
 export class View {
 
@@ -35,6 +36,10 @@ export class View {
 
     removePreviousMouseCellPosition(): void {
         this._foregroundPainter.clearThePreviousCellOnCanvas();
+    }
+
+    getClickedCell(coordinate: Coordinate): Cell {
+        return this._grid.cellAt(Math.floor(coordinate.x / this.cellWidth), Math.floor(coordinate.y / this.cellWidth));
     }
 
     public adjustCanvas(): void {

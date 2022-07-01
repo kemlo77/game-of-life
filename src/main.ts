@@ -44,7 +44,7 @@ function changeCellPainter(cellPaintertype: string): void {
 
 function canvasLeftClicked(event: MouseEvent, canvasId: string): void {
     const coordinate: Coordinate = getMouseCoordinate(event, canvasId);
-    grid.cellAt(Math.floor(coordinate.x / view.cellWidth), Math.floor(coordinate.y / view.cellWidth)).toggleLifeDeath();
+    view.getClickedCell(coordinate).toggleLifeDeath();
     view.redrawGrid();
 }
 
