@@ -1,16 +1,19 @@
 import { Grid } from '../model/grid';
 import { CellPainter } from './cellpainters/cellpainter';
-import { ForegroundPainter } from './foregroundpainter';
+import { ForegroundPainter } from './cellpainters/foregroundpainter';
 import { SmoothCellPainter } from './cellpainters/smoothpainter';
 import { Coordinate } from './coordinate';
 import { Cell } from '../model/cell';
 import { CellPainterFactory } from './cellpainters/cellpainterfactory';
+import { Canvas } from './canvas/canvas';
 
 
 export class View {
 
-    private _cellPainter: CellPainter = new SmoothCellPainter();
-    private _foregroundPainter: ForegroundPainter = new ForegroundPainter();
+    private backgroundCanvas: Canvas = new Canvas('gridLayer');
+    private cellPainter: CellPainter = new SmoothCellPainter(this.backgroundCanvas);
+    private foregroundCanvas: Canvas = new Canvas('foreground');
+    private _foregroundPainter: ForegroundPainter = new ForegroundPainter(this.foregroundCanvas);
     private _grid: Grid;
     private _cellWidth: number;
 
@@ -18,26 +21,22 @@ export class View {
         this._grid = grid;
     }
 
-    set cellPainter(cellPainter: CellPainter) {
-        cellPainter.gridCellWidth = this._cellWidth;
-        this._cellPainter = cellPainter;
-    }
-
     get cellWidth(): number {
         return this._cellWidth;
     }
 
     changePainter(cellPaintertype: string): void {
-        this._cellPainter = CellPainterFactory.getCellPainter(cellPaintertype);
+        this.cellPainter = CellPainterFactory.getCellPainter(cellPaintertype, this.backgroundCanvas);
     }
 
     redrawGrid(): void {
-        this._cellPainter.clearTheCanvas();
-        this._cellPainter.plotCells(this._grid);
+        this.cellPainter.clearTheCanvas();
+        this.cellPainter.plotCells(this._grid);
     }
 
     drawMouseCellPosition(position: Coordinate): void {
-        this._foregroundPainter.colorCellOnMousePosition(position);
+        const cellAtMousePosition: Cell = this.getClickedCell(position);
+        this._foregroundPainter.colorCellOnMousePosition(cellAtMousePosition);
     }
 
     removePreviousMouseCellPosition(): void {
@@ -66,8 +65,8 @@ export class View {
             this._cellWidth = newCanvasHeight / this._grid.numberOfRows;
         }
 
-        this._cellPainter.gridCellWidth = this._cellWidth;
-        this._foregroundPainter.gridCellWidth = this._cellWidth;
+        this.backgroundCanvas.gridCellWidth = this._cellWidth;
+        this.foregroundCanvas.gridCellWidth = this._cellWidth;
         this.redrawGrid();
     }
 

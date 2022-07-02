@@ -1,24 +1,31 @@
 import { Cell } from '../../model/cell';
 import { CellConnection } from '../../model/cellconnection';
 import { Grid } from '../../model/grid';
-import { CanvasPainter } from './canvaspainter';
+import { Canvas } from '../canvas/canvas';
 import { CellPainter } from './cellpainter';
 
-export class RibbonPainter extends CanvasPainter implements CellPainter {
+export class RibbonPainter extends CellPainter {
 
     plotCells(grid: Grid): void {
 
         grid.clusters.forEach(cluster => {
             const randomConnections: CellConnection[] = this.generateMazelikeRandomCellConnections(cluster);
             randomConnections.forEach(connection => {
-                this.paintLineBetweenCells(connection.cell1, connection.cell2, this.mediumLineWidth, this.gray, true);
-                this.paintLineBetweenCells(connection.cell1, connection.cell2, this.mediumLineWidth, this.green);
+                this.canvas.paintLineBetweenCells(
+                    connection.cell1,
+                    connection.cell2,
+                    this.canvas.mediumLineWidth,
+                    this.gray,
+                    true
+                );
+                this.canvas.paintLineBetweenCells(
+                    connection.cell1, connection.cell2, this.canvas.mediumLineWidth, this.green);
             });
         });
 
         const lonleyCells: Cell[] = grid.allLiveCells.filter(cell => cell.livingNeighbours.length == 0);
-        this.paintCircles(lonleyCells, this.gray, this.mediumLineWidth, true);
-        this.paintCircles(lonleyCells, this.green, this.mediumLineWidth, false);
+        this.canvas.paintCircles(lonleyCells, this.gray, this.canvas.mediumLineWidth, true);
+        this.canvas.paintCircles(lonleyCells, this.green, this.canvas.mediumLineWidth, false);
     }
 
 

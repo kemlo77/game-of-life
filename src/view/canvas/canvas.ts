@@ -1,17 +1,17 @@
 import { Cell } from '../../model/cell';
 import { Coordinate } from '../coordinate';
 
-export class CanvasPainter {
-    private canvasElement: HTMLCanvasElement = document.getElementById('gridLayer') as HTMLCanvasElement;
-    private canvasCtx: CanvasRenderingContext2D = this.canvasElement.getContext('2d');
+export class Canvas {
 
-    protected white: string = 'rgba(255,255,255,1)';
-    protected black: string = 'rgba(0,0,0,1)';
-    protected green: string = 'rgba(0,255,0,1)';
-    protected gray: string = 'rgba(128,128,128,1)';
-    protected orange: string = 'rgba(255,127,0,1)';
-    protected yellow: string = 'rgba(255,255,0,1)';
-    protected lightBlue: string = 'rgba(100,100,255,1)';
+    private canvasElement: HTMLCanvasElement;
+    private canvasCtx: CanvasRenderingContext2D;
+
+    constructor(canvasId: string) {
+        this.canvasElement =  document.getElementById(canvasId) as HTMLCanvasElement;
+        this.canvasCtx = this.canvasElement.getContext('2d');
+    }
+
+    protected readonly black: string = 'rgba(0,0,0,1)';
 
     private _gridCellWidth = 20;
     get gridCellWidth(): number {
@@ -38,7 +38,7 @@ export class CanvasPainter {
         this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     }
 
-    protected paintLineBetweenCells(
+    paintLineBetweenCells(
         cell1: Cell,
         cell2: Cell,
         width: number = this.thinLineWidth,
@@ -65,7 +65,7 @@ export class CanvasPainter {
         this.paintCircles(cells, innerColor, this.gridCellWidth * 0.4, false);
     }
 
-    protected paintCircles(
+    paintCircles(
         cells: Cell[],
         color: string,
         diameter: number = this.gridCellWidth,
@@ -85,7 +85,7 @@ export class CanvasPainter {
         });
     }
 
-    protected paintSquares(cells: Cell[], color: string): void {
+    paintSquares(cells: Cell[], color: string): void {
         const padding: number = 1;
         this.canvasCtx.fillStyle = color;
         this.canvasCtx.beginPath(); //varför måste jag ha med detta för att färgändring ska slå igenom
@@ -98,7 +98,12 @@ export class CanvasPainter {
         });
     }
 
-    protected upperLeftCornerOfCell(cell: Cell): Coordinate {
+    clearSquare(cell: Cell): void {
+        const position: Coordinate = this.upperLeftCornerOfCell(cell);
+        this.canvasCtx.clearRect(position.x, position.y, this._gridCellWidth, this._gridCellWidth);
+    }
+
+    private upperLeftCornerOfCell(cell: Cell): Coordinate {
         const xPart: number = cell.columnIndex * this.gridCellWidth;
         const yPart: number = cell.rowIndex * this.gridCellWidth;
         return new Coordinate(xPart, yPart);

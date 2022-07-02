@@ -1,12 +1,16 @@
 import { Grid } from '../../model/grid';
-import { CanvasPainter } from './canvaspainter';
+import { Canvas } from '../canvas/canvas';
 import { CellPainter } from './cellpainter';
 
 
-export class CircularPainter extends CanvasPainter implements CellPainter {
+export class CircularPainter  extends CellPainter {
+
+    constructor(canvas: Canvas) {
+        super(canvas);
+    }
 
     plotCells(grid: Grid): void {
-        this.paintCircles(grid.allLiveCells, this.black);
+        this.canvas.paintCircles(grid.allLiveCells, this.black);
     }
 
 }

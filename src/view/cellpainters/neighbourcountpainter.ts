@@ -1,16 +1,13 @@
 import { Cell } from '../../model/cell';
 import { Grid } from '../../model/grid';
-import { CanvasPainter } from './canvaspainter';
+import { Canvas } from '../canvas/canvas';
 import { CellPainter } from './cellpainter';
 
-export class NeighboursCountPainter extends CanvasPainter implements CellPainter {
-
-
-
+export class NeighboursCountPainter extends CellPainter {
 
     plotCells(grid: Grid): void {
         grid.allLiveCells.forEach(cell => {
-            this.paintSquares([cell], this.colorGivenNumberOfNeighboursToOfCell(cell));
+            this.canvas.paintSquares([cell], this.colorGivenNumberOfNeighboursToOfCell(cell));
         });
     }
 

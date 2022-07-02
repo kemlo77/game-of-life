@@ -1,9 +1,8 @@
 import { Cell } from '../../model/cell';
 import { Grid } from '../../model/grid';
-import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
-export class SmoothCellPainter extends CanvasPainter implements CellPainter {
+export class SmoothCellPainter extends CellPainter {
 
     plotCells(grid: Grid): void {
         const livingCells: Cell[] = grid.allLiveCells;
@@ -11,7 +10,7 @@ export class SmoothCellPainter extends CanvasPainter implements CellPainter {
         livingCells.forEach(livingCell => {
             livingCell.livingNeighbours
                 .forEach(livingNeighbourCell => {
-                    this.paintLineBetweenCells(livingCell, livingNeighbourCell, this.wideLineWidth);
+                    this.canvas.paintLineBetweenCells(livingCell, livingNeighbourCell, this.canvas.wideLineWidth);
                 });
         });
 
@@ -19,11 +18,11 @@ export class SmoothCellPainter extends CanvasPainter implements CellPainter {
             livingCell.deadNeighbours
                 .filter(deadCell => deadCell.livingOrthogonalNeighbours.length >= 3)
                 .forEach(deadCell => {
-                    this.paintCircles([deadCell], this.white);
+                    this.canvas.paintCircles([deadCell], this.white);
                 });
         });
 
-        this.paintCircles(livingCells, this.black);
+        this.canvas.paintCircles(livingCells, this.black);
     }
 
 }

@@ -1,9 +1,13 @@
 import { Cell } from '../../model/cell';
 import { Grid } from '../../model/grid';
-import { CanvasPainter } from './canvaspainter';
+import { Canvas } from '../canvas/canvas';
 import { CellPainter } from './cellpainter';
 
-export class MoleculePainter extends CanvasPainter implements CellPainter {
+export class MoleculePainter extends CellPainter {
+
+    constructor(canvas: Canvas) {
+        super(canvas);
+    }
 
     plotCells(grid: Grid): void {
         const livingCells: Cell[] = grid.allLiveCells;
@@ -13,7 +17,7 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
             .forEach(cell => {
                 cell.livingOrthogonalNeighbours
                     .forEach(neighbour => {
-                        this.paintLineBetweenCells(cell, neighbour);
+                        this.canvas.paintLineBetweenCells(cell, neighbour);
                     });
             });
 
@@ -21,7 +25,7 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
             .forEach(cell => {
                 cell.livingDiagonalNeighbours
                     .forEach(neighbour => {
-                        this.paintLineBetweenCells(cell, neighbour);
+                        this.canvas.paintLineBetweenCells(cell, neighbour);
                     });
             });
 
@@ -29,18 +33,18 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
             cell.livingDiagonalNeighbours
                 .forEach(neighbour => {
                     if (this.cellsHaveNoCommonLivingOrthogonalNeighbours(cell, neighbour)) {
-                        this.paintLineBetweenCells(cell, neighbour);
+                        this.canvas.paintLineBetweenCells(cell, neighbour);
                     }
                 });
         });
 
 
-        this.paintCellsAsHollowDots(livingCells, this.gray);
-        this.paintCellsAsHollowDots(
+        this.canvas.paintCellsAsHollowDots(livingCells, this.gray);
+        this.canvas.paintCellsAsHollowDots(
             this.cellsWithNoLivingNeighbours(livingCells),
             this.yellow
         );
-        this.paintCellsAsHollowDots(
+        this.canvas.paintCellsAsHollowDots(
             this.cellsWithOneLivingOrthogonalNeighbour(livingCells),
             this.green
         );
@@ -50,22 +54,22 @@ export class MoleculePainter extends CanvasPainter implements CellPainter {
             cell.livingDiagonalNeighbours
                 .forEach(neighbour => {
                     if (this.cellsHaveNoCommonLivingOrthogonalNeighbours(cell, neighbour)) {
-                        this.paintCellsAsHollowDots([cell, neighbour], this.gray);
+                        this.canvas.paintCellsAsHollowDots([cell, neighbour], this.gray);
                     }
                 });
         });
 
-        this.paintCellsAsHollowDots(
+        this.canvas.paintCellsAsHollowDots(
             this.cellsWithOneLivingDiagonalNeighbour(livingCells),
             this.lightBlue
         );
 
-        this.paintCellsAsHollowDots(
+        this.canvas.paintCellsAsHollowDots(
             this.cellsWithTwoDiagonalNeighboursNotOnALine(livingCells),
             this.orange
         );
 
-        this.paintCellsAsHollowDots(
+        this.canvas.paintCellsAsHollowDots(
             this.cellsWithTwoOrthogonalNeighbousNotOnALine(livingCells),
             this.orange
         );
