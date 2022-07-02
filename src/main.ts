@@ -1,7 +1,6 @@
 import './style.css';
 import { Grid } from './model/grid';
 import { View } from './view/view';
-import { CellPainterFactory } from './view/cellpainters/cellpainterfactory';
 import { Coordinate } from './view/coordinate';
 import { AnimatorService } from './model/animator.service';
 
@@ -37,8 +36,8 @@ function takeAStep(): void {
     view.redrawGrid();
 }
 
-function changeCellPainter(cellPaintertype: string): void {
-    view.cellPainter = CellPainterFactory.getCellPainter(cellPaintertype);
+function changePainter(cellPaintertype: string): void {
+    view.changePainter(cellPaintertype);
     view.redrawGrid();
 }
 
@@ -77,25 +76,25 @@ function keyPressed(event: KeyboardEvent): void {
     switch (event.key.toLowerCase()) {
         case 'w': toggleRunning(); break;
         case 'e': takeAStep(); break;
-        case 'r': changeCellPainter('ribbon'); break;
-        case 'a': changeCellPainter('age'); break;
-        case 's': changeCellPainter('smooth'); break;
-        case 'd': changeCellPainter('circular'); break;
-        case 'f': changeCellPainter('molecule'); break;
+        case 'r': changePainter('ribbon'); break;
+        case 'a': changePainter('age'); break;
+        case 's': changePainter('smooth'); break;
+        case 'd': changePainter('circular'); break;
+        case 'f': changePainter('molecule'); break;
         case 'x': killAll(); break;
-        case 'c': changeCellPainter('classic'); break;
-        case 'v': changeCellPainter('neighbours'); break;
+        case 'c': changePainter('classic'); break;
+        case 'v': changePainter('neighbours'); break;
     }
 }
 
 document.getElementById('stepButton').addEventListener('click', () => takeAStep());
-document.getElementById('classicButton').addEventListener('click', () => changeCellPainter('classic'));
-document.getElementById('circularButton').addEventListener('click', () => changeCellPainter('circular'));
-document.getElementById('smoothButton').addEventListener('click', () => changeCellPainter('smooth'));
-document.getElementById('cellAgeButton').addEventListener('click', () => changeCellPainter('age'));
-document.getElementById('neigbourcountButton').addEventListener('click', () => changeCellPainter('neighbours'));
-document.getElementById('ribbonButton').addEventListener('click', () => changeCellPainter('ribbon'));
-document.getElementById('moleculeButton').addEventListener('click', () => changeCellPainter('molecule'));
+document.getElementById('classicButton').addEventListener('click', () => changePainter('classic'));
+document.getElementById('circularButton').addEventListener('click', () => changePainter('circular'));
+document.getElementById('smoothButton').addEventListener('click', () => changePainter('smooth'));
+document.getElementById('cellAgeButton').addEventListener('click', () => changePainter('age'));
+document.getElementById('neigbourcountButton').addEventListener('click', () => changePainter('neighbours'));
+document.getElementById('ribbonButton').addEventListener('click', () => changePainter('ribbon'));
+document.getElementById('moleculeButton').addEventListener('click', () => changePainter('molecule'));
 document.getElementById('startStopButton').addEventListener('click', () => toggleRunning());
 
 document.getElementById('killAllButton').addEventListener('click', () => killAll());

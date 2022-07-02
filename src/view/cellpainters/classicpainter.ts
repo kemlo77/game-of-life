@@ -3,7 +3,7 @@ import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
 
-export class ClassicCellPainter extends CanvasPainter implements CellPainter {
+export class ClassicPainter extends CanvasPainter implements CellPainter {
 
 
     plotCells(grid: Grid): void {

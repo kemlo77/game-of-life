@@ -4,6 +4,8 @@ import { ForegroundPainter } from './foregroundpainter';
 import { SmoothCellPainter } from './cellpainters/smoothpainter';
 import { Coordinate } from './coordinate';
 import { Cell } from '../model/cell';
+import { CellPainterFactory } from './cellpainters/cellpainterfactory';
+
 
 export class View {
 
@@ -23,6 +25,10 @@ export class View {
 
     get cellWidth(): number {
         return this._cellWidth;
+    }
+
+    changePainter(cellPaintertype: string): void {
+        this._cellPainter = CellPainterFactory.getCellPainter(cellPaintertype);
     }
 
     redrawGrid(): void {

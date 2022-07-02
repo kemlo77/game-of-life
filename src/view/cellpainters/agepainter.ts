@@ -4,7 +4,7 @@ import { CanvasPainter } from './canvaspainter';
 import { CellPainter } from './cellpainter';
 
 
-export class CellAgePainter extends CanvasPainter implements CellPainter {
+export class AgePainter extends CanvasPainter implements CellPainter {
 
     plotCells(grid: Grid): void {
         grid.allLiveCells.forEach(cell => {
