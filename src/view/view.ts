@@ -10,14 +10,19 @@ import { Canvas } from './canvas/canvas';
 
 export class View {
 
-    private backgroundCanvas: Canvas = new Canvas('gridLayer');
-    private cellPainter: CellPainter = new SmoothCellPainter(this.backgroundCanvas);
-    private foregroundCanvas: Canvas = new Canvas('foreground');
-    private _foregroundPainter: ForegroundPainter = new ForegroundPainter(this.foregroundCanvas);
     private _grid: Grid;
+    private backgroundCanvas: Canvas;
+    private cellPainter: CellPainter;
+    private foregroundCanvas: Canvas;
+    private _foregroundPainter: ForegroundPainter;
+    
 
     constructor(grid: Grid) {
         this._grid = grid;
+        this.backgroundCanvas = new Canvas('gridLayer', grid);
+        this.cellPainter = new SmoothCellPainter(this.backgroundCanvas);
+        this.foregroundCanvas = new Canvas('foreground', grid);
+        this._foregroundPainter = new ForegroundPainter(this.foregroundCanvas);
     }
 
     changePainter(cellPaintertype: string): void {
@@ -30,7 +35,7 @@ export class View {
     }
 
     drawMouseCellPosition(position: Coordinate): void {
-        const cellAtMousePosition: Cell = this.getClickedCell(position);
+        const cellAtMousePosition: Cell = this.getCellAtCoordinate(position);
         this._foregroundPainter.colorCellOnMousePosition(cellAtMousePosition);
     }
 
@@ -38,15 +43,13 @@ export class View {
         this._foregroundPainter.clearThePreviousCellOnCanvas();
     }
 
-    getClickedCell(coordinate: Coordinate): Cell {
-        const columnIndex: number = Math.floor(coordinate.x / this.foregroundCanvas.cellWidth);
-        const rowIndex: number = Math.floor(coordinate.y / this.foregroundCanvas.cellWidth);
-        return this._grid.cellAt(columnIndex, rowIndex);
+    getCellAtCoordinate(coordinate: Coordinate): Cell {
+        return this.foregroundCanvas.getCellAttCoordinate(coordinate);
     }
 
     public adjustCanvas(): void {
-        this.backgroundCanvas.updateCanvasWhenWindowChanges(this._grid.numberOfColumns,this._grid.numberOfRows);
-        this.foregroundCanvas.updateCanvasWhenWindowChanges(this._grid.numberOfColumns,this._grid.numberOfRows);
+        this.backgroundCanvas.updateCanvasWhenWindowChanges();
+        this.foregroundCanvas.updateCanvasWhenWindowChanges();
 
         const div: HTMLDivElement = document.querySelector('div#viewport') as HTMLDivElement;
         div.style.height = this.foregroundCanvas.height + 'px';

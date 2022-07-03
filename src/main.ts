@@ -32,8 +32,13 @@ function toggleRunning(): void {
 }
 
 function takeAStep(): void {
-    grid.evolve();
+    evolveAllCellsInGrid();
     view.redrawGrid();
+}
+
+function evolveAllCellsInGrid(): void {
+    grid.allCells.forEach(cell => cell.planFate());
+    grid.allCells.forEach(cell => cell.executeFate());
 }
 
 function changePainter(cellPaintertype: string): void {
@@ -43,7 +48,7 @@ function changePainter(cellPaintertype: string): void {
 
 function canvasLeftClicked(event: MouseEvent, canvasId: string): void {
     const coordinate: Coordinate = getMouseCoordinate(event, canvasId);
-    view.getClickedCell(coordinate).toggleLifeDeath();
+    view.getCellAtCoordinate(coordinate).toggleLifeDeath();
     view.redrawGrid();
 }
 
@@ -67,9 +72,13 @@ function canvasMouseOut(): void {
 function killAll(): void {
     const reallyKillAll: boolean = confirm('Do you want to kill every cell?');
     if (reallyKillAll) {
-        grid.killAll();
+        killAllCellsInGrid();
         view.redrawGrid();
     }
+}
+
+function killAllCellsInGrid(): void {
+    grid.allCells.forEach(cell => cell.die());
 }
 
 function keyPressed(event: KeyboardEvent): void {
@@ -102,7 +111,7 @@ document.getElementById('killAllButton').addEventListener('click', () => killAll
 const foreground: HTMLCanvasElement = document.getElementById('foreground') as HTMLCanvasElement;
 foreground.addEventListener('click', (event) => canvasLeftClicked(event, (event.target as Element).id));
 foreground.addEventListener('mousemove', (event) => canvasMouseMovement(event, (event.target as Element).id));
-foreground.addEventListener('mouseout', (event) => canvasMouseOut());
+foreground.addEventListener('mouseout', () => canvasMouseOut());
 
 document.addEventListener('keydown', (event) => keyPressed(event));
 

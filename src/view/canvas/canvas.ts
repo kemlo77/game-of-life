@@ -1,4 +1,5 @@
 import { Cell } from '../../model/cell';
+import { Grid } from '../../model/grid';
 import { Coordinate } from '../coordinate';
 
 export class Canvas {
@@ -8,10 +9,12 @@ export class Canvas {
     private _width: number;
     private _height: number;
     private _cellWidth = 20;
+    private _grid: Grid;
 
-    constructor(canvasId: string) {
+    constructor(canvasId: string, grid: Grid) {
         this.canvasElement =  document.getElementById(canvasId) as HTMLCanvasElement;
         this.canvasCtx = this.canvasElement.getContext('2d');
+        this._grid = grid;
     }
 
     protected readonly black: string = 'rgba(0,0,0,1)';
@@ -44,18 +47,28 @@ export class Canvas {
         this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     }
 
-    updateCanvasWhenWindowChanges(numberOfColumns: number, numberOfRows: number): void {
-        const width: number = window.innerWidth - 32;
-        const height: number = window.innerHeight - 16;
-        this.canvasElement.width = width;
-        this.canvasElement.height = height;
+    updateCanvasWhenWindowChanges(): void {
+        this._width = window.innerWidth - 32;
+        this._height = window.innerHeight - 16;
+        this.canvasElement.width = this._width;
+        this.canvasElement.height = this._height;
 
-        if (width > height) {
-            this._cellWidth = width / numberOfColumns;
+        if (this._width > this._height) {
+            this._cellWidth = this._width / this._grid.numberOfColumns;
         } else {
-            this._cellWidth = height / numberOfRows;
+            this._cellWidth = this._height / this._grid.numberOfRows;
         }
+    }
 
+    getCellAttCoordinate(coordinate: Coordinate): Cell {
+        const xOutsideCanvas: boolean = 0 > coordinate.x || coordinate.x >= this._width;
+        const yOutsideCanvas: boolean = 0 > coordinate.y || coordinate.y >= this._height;
+        if (xOutsideCanvas || yOutsideCanvas) {
+            return new Cell(0,0);
+        }
+        const columnIndex: number = Math.floor(coordinate.x / this.cellWidth);
+        const rowIndex: number = Math.floor(coordinate.y / this.cellWidth);
+        return this._grid.cellAt(columnIndex, rowIndex);
     }
 
     paintLineBetweenCells(

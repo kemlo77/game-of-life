@@ -9,6 +9,30 @@ export class Grid {
         this.connectCellsWithNeighbours();
     }
 
+    private generateColumnOfRowOfCells(width: number, height: number): Cell[][] {
+        const columnOfRows: Cell[][] = [];
+        for (let y: number = 0; y < height; y++) {
+            const row: Cell[] = [];
+            for (let x: number = 0; x < width; x++) {
+                row.push(new Cell(x, y));
+            }
+            columnOfRows.push(row);
+        }
+        return columnOfRows;
+    }
+
+    private connectCellsWithNeighbours(): void {
+        this.allCells.forEach(currentCell => {
+
+            this.allCells
+                .filter(cell => cell !== currentCell)
+                .filter(cell => Math.abs(currentCell.columnIndex - cell.columnIndex) <= 1)
+                .filter(cell => Math.abs(currentCell.rowIndex - cell.rowIndex) <= 1)
+                .forEach(cell => currentCell.addNeighbour(cell));
+
+        });
+    }
+
     get numberOfColumns(): number {
         return this._grid[0].length;
     }
@@ -29,7 +53,7 @@ export class Grid {
         return this.allCells.filter(cell => cell.isAlive);
     }
 
-    get clusters(): Cell[][] {
+    get clustersOfLiveCells(): Cell[][] {
         const clusterArray: Cell[][] = [];
         const alreadyChecked: Set<Cell> = new Set();
 
@@ -58,42 +82,5 @@ export class Grid {
         }
         return clusterArray;
     }
-
-    private generateColumnOfRowOfCells(width: number, height: number): Cell[][] {
-        const columnOfRows: Cell[][] = [];
-        for (let y: number = 0; y < height; y++) {
-            const row: Cell[] = [];
-            for (let x: number = 0; x < width; x++) {
-                row.push(new Cell(x, y));
-            }
-            columnOfRows.push(row);
-        }
-        return columnOfRows;
-    }
-
-
-    private connectCellsWithNeighbours(): void {
-        this.allCells.forEach(currentCell => {
-
-            this.allCells
-                .filter(cell => cell !== currentCell)
-                .filter(cell => Math.abs(currentCell.columnIndex - cell.columnIndex) <= 1)
-                .filter(cell => Math.abs(currentCell.rowIndex - cell.rowIndex) <= 1)
-                .forEach(cell => currentCell.addNeighbour(cell));
-
-        });
-    }
-
-    evolve(): void {
-        this.allCells.forEach(cell => cell.planFate());
-        this.allCells.forEach(cell => cell.executeFate());
-    }
-
-    killAll(): void {
-        this.allCells.forEach(cell => cell.die());
-    }
-
-
-
 
 }

@@ -58,39 +58,22 @@ describe('grid', () => {
         expect(grid.cellAt(3, 2).rowIndex).to.equal(2);
     });
 
-    it('blinker blinks', () => {
-        const grid: Grid = new Grid(5, 5);
-        grid.cellAt(2, 1).live();
-        grid.cellAt(2, 2).live();
-        grid.cellAt(2, 3).live();
-        grid.evolve();
-        expect(grid.cellAt(1, 2).isAlive).to.be.true;
-        expect(grid.cellAt(2, 2).isAlive).to.be.true;
-        expect(grid.cellAt(3, 2).isAlive).to.be.true;
-        expect(grid.allCells.filter(cell => cell.isAlive).length).to.equal(3);
-        grid.evolve();
-        expect(grid.cellAt(2, 1).isAlive).to.be.true;
-        expect(grid.cellAt(2, 2).isAlive).to.be.true;
-        expect(grid.cellAt(2, 3).isAlive).to.be.true;
-        expect(grid.allCells.filter(cell => cell.isAlive).length).to.equal(3);
-    });
-
     it('when all are dead, there is no cluster', () => {
         const grid: Grid = new Grid(10, 10);
-        expect(grid.clusters.length).to.equal(0);
+        expect(grid.clustersOfLiveCells.length).to.equal(0);
     });
 
     it('when one is a live, there is one cluster', () => {
         const grid: Grid = new Grid(10, 10);
         grid.cellAt(5, 5).live();
-        expect(grid.clusters.length).to.equal(1);
+        expect(grid.clustersOfLiveCells.length).to.equal(1);
     });
 
     it('when two separate are alive, there are two clusters', () => {
         const grid: Grid = new Grid(10, 10);
         grid.cellAt(5, 5).live();
         grid.cellAt(7, 9).live();
-        expect(grid.clusters.length).to.equal(2);
+        expect(grid.clustersOfLiveCells.length).to.equal(2);
     });
 
     it('when three grouped plus one separate are alive, there are three clusters', () => {
@@ -100,7 +83,7 @@ describe('grid', () => {
         grid.cellAt(8, 9).live();
         grid.cellAt(9, 9).live();
         grid.cellAt(1, 1).live();
-        expect(grid.clusters.length).to.equal(3);
+        expect(grid.clustersOfLiveCells.length).to.equal(3);
     });
 
     it('allLiveCells', () => {

@@ -1,14 +1,13 @@
 import { Cell } from '../../model/cell';
 import { CellConnection } from '../../model/cellconnection';
 import { Grid } from '../../model/grid';
-import { Canvas } from '../canvas/canvas';
 import { CellPainter } from './cellpainter';
 
 export class RibbonPainter extends CellPainter {
 
     plotCells(grid: Grid): void {
 
-        grid.clusters.forEach(cluster => {
+        grid.clustersOfLiveCells.forEach(cluster => {
             const randomConnections: CellConnection[] = this.generateMazelikeRandomCellConnections(cluster);
             randomConnections.forEach(connection => {
                 this.canvas.paintLineBetweenCells(
