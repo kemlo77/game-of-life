@@ -8,7 +8,6 @@ import { NeighboursCountPainter } from './neighbourcountpainter';
 import { SmoothCellPainter } from './smoothpainter';
 import { Canvas } from '../canvas/canvas';
 
-//TODO: döpa om till factory?
 export class CellPainterFactory {
 
 

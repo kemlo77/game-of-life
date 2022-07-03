@@ -15,14 +15,9 @@ export class View {
     private foregroundCanvas: Canvas = new Canvas('foreground');
     private _foregroundPainter: ForegroundPainter = new ForegroundPainter(this.foregroundCanvas);
     private _grid: Grid;
-    private _cellWidth: number;
 
     constructor(grid: Grid) {
         this._grid = grid;
-    }
-
-    get cellWidth(): number {
-        return this._cellWidth;
     }
 
     changePainter(cellPaintertype: string): void {
@@ -44,29 +39,18 @@ export class View {
     }
 
     getClickedCell(coordinate: Coordinate): Cell {
-        return this._grid.cellAt(Math.floor(coordinate.x / this.cellWidth), Math.floor(coordinate.y / this.cellWidth));
+        const columnIndex: number = Math.floor(coordinate.x / this.foregroundCanvas.cellWidth);
+        const rowIndex: number = Math.floor(coordinate.y / this.foregroundCanvas.cellWidth);
+        return this._grid.cellAt(columnIndex, rowIndex);
     }
 
     public adjustCanvas(): void {
-        const newCanvasWidth: number = window.innerWidth - 32;
-        const newCanvasHeight: number = window.innerHeight - 16;
+        this.backgroundCanvas.updateCanvasWhenWindowChanges(this._grid.numberOfColumns,this._grid.numberOfRows);
+        this.foregroundCanvas.updateCanvasWhenWindowChanges(this._grid.numberOfColumns,this._grid.numberOfRows);
 
-        const canvases: NodeListOf<HTMLCanvasElement> = document.querySelectorAll('div#viewport canvas');
-        canvases.forEach((canvas) => {
-            canvas.width = newCanvasWidth;
-            canvas.height = newCanvasHeight;
-        });
         const div: HTMLDivElement = document.querySelector('div#viewport') as HTMLDivElement;
-        div.style.height = newCanvasHeight + 'px';
+        div.style.height = this.foregroundCanvas.height + 'px';
 
-        if (newCanvasWidth > newCanvasHeight) {
-            this._cellWidth = newCanvasWidth / this._grid.numberOfColumns;
-        } else {
-            this._cellWidth = newCanvasHeight / this._grid.numberOfRows;
-        }
-
-        this.backgroundCanvas.gridCellWidth = this._cellWidth;
-        this.foregroundCanvas.gridCellWidth = this._cellWidth;
         this.redrawGrid();
     }
 
