@@ -4,16 +4,16 @@ import { Coordinate } from '../coordinate';
 
 export class Canvas {
 
-    private canvasElement: HTMLCanvasElement;
-    private canvasCtx: CanvasRenderingContext2D;
+    private _canvasElement: HTMLCanvasElement;
+    private _canvasCtx: CanvasRenderingContext2D;
     private _width: number;
     private _height: number;
     private _cellWidth = 20;
     private _grid: Grid;
 
     constructor(canvasId: string, grid: Grid) {
-        this.canvasElement =  document.getElementById(canvasId) as HTMLCanvasElement;
-        this.canvasCtx = this.canvasElement.getContext('2d');
+        this._canvasElement =  document.getElementById(canvasId) as HTMLCanvasElement;
+        this._canvasCtx = this._canvasElement.getContext('2d');
         this._grid = grid;
     }
 
@@ -44,14 +44,14 @@ export class Canvas {
     }
 
     clearTheCanvas(): void {
-        this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+        this._canvasCtx.clearRect(0, 0, this._width, this._height);
     }
 
     updateCanvasWhenWindowChanges(): void {
         this._width = window.innerWidth - 32;
         this._height = window.innerHeight - 16;
-        this.canvasElement.width = this._width;
-        this.canvasElement.height = this._height;
+        this._canvasElement.width = this._width;
+        this._canvasElement.height = this._height;
 
         if (this._width > this._height) {
             this._cellWidth = this._width / this._grid.numberOfColumns;
@@ -82,15 +82,15 @@ export class Canvas {
         if (offset) {
             shadowOffset = this.cellWidth * 0.1;
         }
-        this.canvasCtx.strokeStyle = color;
+        this._canvasCtx.strokeStyle = color;
         const centerOfCell1: Coordinate = this.centerOfCell(cell1);
         const centerOfCell2: Coordinate = this.centerOfCell(cell2);
-        this.canvasCtx.lineWidth = width;
-        this.canvasCtx.lineCap = 'round';
-        this.canvasCtx.beginPath();
-        this.canvasCtx.moveTo(centerOfCell1.x + shadowOffset, centerOfCell1.y + shadowOffset);
-        this.canvasCtx.lineTo(centerOfCell2.x + shadowOffset, centerOfCell2.y + shadowOffset);
-        this.canvasCtx.stroke();
+        this._canvasCtx.lineWidth = width;
+        this._canvasCtx.lineCap = 'round';
+        this._canvasCtx.beginPath();
+        this._canvasCtx.moveTo(centerOfCell1.x + shadowOffset, centerOfCell1.y + shadowOffset);
+        this._canvasCtx.lineTo(centerOfCell2.x + shadowOffset, centerOfCell2.y + shadowOffset);
+        this._canvasCtx.stroke();
     }
 
     paintCellsAsHollowDots(cells: Cell[], innerColor: string): void {
@@ -109,31 +109,31 @@ export class Canvas {
             shadowOffset = this.cellWidth * 0.1;
         }
         const radius: number = diameter / 2;
-        this.canvasCtx.fillStyle = color;
+        this._canvasCtx.fillStyle = color;
         cells.forEach(cell => {
             const center: Coordinate = this.centerOfCell(cell);
-            this.canvasCtx.beginPath();
-            this.canvasCtx.arc(center.x + shadowOffset, center.y + shadowOffset, radius, 0, 2 * Math.PI);
-            this.canvasCtx.fill();
+            this._canvasCtx.beginPath();
+            this._canvasCtx.arc(center.x + shadowOffset, center.y + shadowOffset, radius, 0, 2 * Math.PI);
+            this._canvasCtx.fill();
         });
     }
 
     paintSquares(cells: Cell[], color: string): void {
         const padding: number = 1;
-        this.canvasCtx.fillStyle = color;
-        this.canvasCtx.beginPath(); //varför måste jag ha med detta för att färgändring ska slå igenom
-        this.canvasCtx.stroke();    // dito
+        this._canvasCtx.fillStyle = color;
+        this._canvasCtx.beginPath(); //varför måste jag ha med detta för att färgändring ska slå igenom
+        this._canvasCtx.stroke();    // dito
         const squareWidth: number = this.cellWidth - 2 * padding;
         cells.forEach(cell => {
             const corner: Coordinate = this.upperLeftCornerOfCell(cell);
-            this.canvasCtx.rect(corner.x + padding, corner.y + padding, squareWidth, squareWidth);
-            this.canvasCtx.fill();
+            this._canvasCtx.rect(corner.x + padding, corner.y + padding, squareWidth, squareWidth);
+            this._canvasCtx.fill();
         });
     }
 
     clearSquare(cell: Cell): void {
         const position: Coordinate = this.upperLeftCornerOfCell(cell);
-        this.canvasCtx.clearRect(position.x, position.y, this.cellWidth, this.cellWidth);
+        this._canvasCtx.clearRect(position.x, position.y, this.cellWidth, this.cellWidth);
     }
 
     private upperLeftCornerOfCell(cell: Cell): Coordinate {
