@@ -10,6 +10,9 @@ export class Canvas {
     private _height: number;
     private _cellWidth = 20;
     private _grid: Grid;
+    private _xOffset: number = 0;
+    private _yOffset: number = 0;
+
 
     constructor(canvasId: string, grid: Grid) {
         this._canvasElement =  document.getElementById(canvasId) as HTMLCanvasElement;
@@ -55,8 +58,12 @@ export class Canvas {
 
         if (this._width > this._height) {
             this._cellWidth = this._width / this._grid.numberOfColumns;
+            this._yOffset = (this._grid.numberOfRows * this._cellWidth - this._height) / 2;
+            this._xOffset = 0;            
         } else {
             this._cellWidth = this._height / this._grid.numberOfRows;
+            this._yOffset = 0;
+            this._xOffset = (this._grid.numberOfColumns * this._cellWidth - this._width) / 2;
         }
     }
 
@@ -66,8 +73,8 @@ export class Canvas {
         if (xOutsideCanvas || yOutsideCanvas) {
             return new Cell(0,0);
         }
-        const columnIndex: number = Math.floor(coordinate.x / this.cellWidth);
-        const rowIndex: number = Math.floor(coordinate.y / this.cellWidth);
+        const columnIndex: number = Math.floor((coordinate.x + this._xOffset) / this.cellWidth);
+        const rowIndex: number = Math.floor((coordinate.y + this._yOffset) / this.cellWidth);
         return this._grid.cellAt(columnIndex, rowIndex);
     }
 
@@ -137,14 +144,14 @@ export class Canvas {
     }
 
     private upperLeftCornerOfCell(cell: Cell): Coordinate {
-        const xPart: number = cell.columnIndex * this.cellWidth;
-        const yPart: number = cell.rowIndex * this.cellWidth;
+        const xPart: number = cell.columnIndex * this.cellWidth - this._xOffset;
+        const yPart: number = cell.rowIndex * this.cellWidth - this._yOffset;
         return new Coordinate(xPart, yPart);
     }
 
     private centerOfCell(cell: Cell): Coordinate {
-        const xPart: number = cell.columnIndex * this.cellWidth + this.cellWidth / 2;
-        const yPart: number = cell.rowIndex * this.cellWidth + this.cellWidth / 2;
+        const xPart: number = (cell.columnIndex * this.cellWidth + this.cellWidth / 2) - this._xOffset;
+        const yPart: number = (cell.rowIndex * this.cellWidth + this.cellWidth / 2) - this._yOffset;
         return new Coordinate(xPart, yPart);
     }
 

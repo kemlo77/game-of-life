@@ -1,6 +1,6 @@
 import { Grid } from '../model/grid';
 import { CellPainter } from './cellpainters/cellpainter';
-import { ForegroundPainter } from './cellpainters/foregroundpainter';
+import { SquareCursorPainter } from './cellpainters/squarecursorpainter';
 import { Coordinate } from './coordinate';
 import { Cell } from '../model/cell';
 import { CellPainterFactory } from './cellpainters/cellpainterfactory';
@@ -13,7 +13,7 @@ export class View {
     private backgroundCanvas: Canvas;
     private cellPainter: CellPainter;
     private foregroundCanvas: Canvas;
-    private foregroundPainter: ForegroundPainter;
+    private foregroundPainter: SquareCursorPainter;
     
 
     constructor(grid: Grid) {
@@ -21,7 +21,7 @@ export class View {
         this.backgroundCanvas = new Canvas('gridLayer', grid);
         this.cellPainter = CellPainterFactory.getCellPainter('smooth', this.backgroundCanvas);
         this.foregroundCanvas = new Canvas('foreground', grid);
-        this.foregroundPainter = new ForegroundPainter(this.foregroundCanvas);
+        this.foregroundPainter = new SquareCursorPainter(this.foregroundCanvas);
     }
 
     changePainter(cellPaintertype: string): void {
