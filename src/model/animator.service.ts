@@ -2,66 +2,93 @@ import { Grid } from './grid';
 
 export class AnimatorService {
 
-    static createPentaDecathlon(grid: Grid, posX: number, posY: number): void {
-        grid.cellAt(posX + 1, posY + 0).live();
-        grid.cellAt(posX + 1, posY + 1).live();
-        grid.cellAt(posX + 0, posY + 2).live();
-        grid.cellAt(posX + 2, posY + 2).live();
-        grid.cellAt(posX + 1, posY + 3).live();
-        grid.cellAt(posX + 1, posY + 4).live();
-        grid.cellAt(posX + 1, posY + 5).live();
-        grid.cellAt(posX + 1, posY + 6).live();
-        grid.cellAt(posX + 0, posY + 7).live();
-        grid.cellAt(posX + 2, posY + 7).live();
-        grid.cellAt(posX + 1, posY + 8).live();
-        grid.cellAt(posX + 1, posY + 9).live();
+    private _grid: Grid;
+
+    constructor(grid: Grid) {
+        this._grid = grid;
     }
 
-    static createToad(grid: Grid, posX: number, posY: number): void {
-        grid.cellAt(posX + 0, posY + 0).live();
-        grid.cellAt(posX + 1, posY + 0).live();
-        grid.cellAt(posX + 2, posY + 0).live();
-        grid.cellAt(posX + 1, posY + 1).live();
-        grid.cellAt(posX + 2, posY + 1).live();
-        grid.cellAt(posX + 3, posY + 1).live();
-    }
-    
-    static createLightWeightSpaceship(grid: Grid, posX: number, posY: number): void {
-        grid.cellAt(posX + 0, posY + 0).live();
-        grid.cellAt(posX + 0, posY + 2).live();
-        grid.cellAt(posX + 1, posY + 3).live();
-        grid.cellAt(posX + 2, posY + 3).live();
-        grid.cellAt(posX + 3, posY + 3).live();
-        grid.cellAt(posX + 4, posY + 3).live();
-        grid.cellAt(posX + 4, posY + 2).live();
-        grid.cellAt(posX + 4, posY + 1).live();
-        grid.cellAt(posX + 3, posY + 0).live();
-    }
-    
-    static createGlider(grid: Grid, posX: number, posY: number): void {
-        grid.cellAt(posX+2, posY+0).live();
-        grid.cellAt(posX+2, posY+1).live();
-        grid.cellAt(posX+2, posY+2).live();
-        grid.cellAt(posX+1, posY+2).live();
-        grid.cellAt(posX+0, posY+1).live();
-    }
-    
-    static createZhexomino(grid: Grid, posX: number, posY: number): void {
-        grid.cellAt(posX + 0, posY + 0).live();
-        grid.cellAt(posX + 1, posY + 0).live();
-        grid.cellAt(posX + 1, posY + 1).live();
-        grid.cellAt(posX + 1, posY + 2).live();
-        grid.cellAt(posX + 1, posY + 3).live();
-        grid.cellAt(posX + 2, posY + 3).live();
+    private pentaDecathlon: number[][] = [
+        [0, 1, 0],
+        [0, 1, 0],
+        [1, 0, 1],
+        [0, 1, 0],
+        [0, 1, 0],
+        [0, 1, 0],
+        [0, 1, 0],
+        [1, 0, 1],
+        [0, 1, 0],
+        [0, 1, 0]
+    ];
+    private zHexomino: number[][] = [
+        [1, 1, 0],
+        [0, 1, 0],
+        [0, 1, 0],
+        [0, 1, 0],
+        [0, 1, 1]
+    ];
+    private ship: number[][] = [
+        [1, 1, 0],
+        [1, 0, 1],
+        [0, 1, 1]
+    ];
+    private toad: number[][] = [
+        [1, 1, 1, 0],
+        [0, 1, 1, 1]
+    ];
+    private lightweightSpaceship: number[][] = [
+        [1, 0, 0, 1, 0],
+        [0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 1]
+    ];
+    private glider: number[][] = [
+        [0, 0, 1],
+        [1, 0, 1],
+        [0, 1, 1]
+    ];
+
+    private animatePattern(pattern: number[][], posX: number, posY: number): void {
+        pattern.forEach((row, rowIndex) => {
+            row.forEach((shouldLive, columnIndex) => {
+                if (shouldLive) {
+                    this._grid.cellAt(posX + columnIndex, posY + rowIndex).live();
+                }
+            });
+        });
     }
 
-    static createCorners(grid: Grid): void {
-        grid.cellAt(0, 0).live();
-        grid.cellAt(grid.numberOfColumns -1, grid.numberOfRows -1).live();
+    createPentaDecathlon(posX: number, posY: number): void {
+        this.animatePattern(this.pentaDecathlon,posX,posY);
     }
-    
-    static createMidpoints(grid: Grid): void {
-        grid.cellAt(grid.numberOfColumns / 2, grid.numberOfRows / 2).live();
+
+    createZhexomino(posX: number, posY: number): void {
+        this.animatePattern(this.zHexomino, posX, posY);
+    }
+
+    createShip(posX: number, posY: number): void {
+        this.animatePattern(this.ship, posX, posY);
+    }
+
+    createToad(posX: number, posY: number): void {
+        this.animatePattern(this.toad, posX, posY);
+    }
+
+    createLightweightSpaceship(posX: number, posY: number): void {
+        this.animatePattern(this.lightweightSpaceship, posX, posY);
+    }
+
+    createGlider(posX: number, posY: number): void {
+        this.animatePattern(this.glider, posX, posY);
+    }
+
+    createCorners(): void {
+        this._grid.cellAt(0, 0).live();
+        this._grid.cellAt(this._grid.numberOfColumns - 1, this._grid.numberOfRows - 1).live();
+    }
+
+    createMidpoints(): void {
+        this._grid.cellAt(this._grid.numberOfColumns / 2, this._grid.numberOfRows / 2).live();
     }
 
 }

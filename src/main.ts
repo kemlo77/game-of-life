@@ -8,17 +8,19 @@ import { AnimatorService } from './model/animator.service';
 
 const grid: Grid = new Grid(60, 60);
 const view: View = new View(grid);
+const animator: AnimatorService = new AnimatorService(grid);
 let running: boolean = false;
 let handle: any;
 
 //Glider
-AnimatorService.createGlider(grid,27,1);
-AnimatorService.createZhexomino(grid,10,27);
-AnimatorService.createLightWeightSpaceship(grid,12,5);
-AnimatorService.createPentaDecathlon(grid,9,10);
-AnimatorService.createToad(grid,4,3);
-AnimatorService.createCorners(grid);
-AnimatorService.createMidpoints(grid);
+animator.createGlider(27,1);
+animator.createZhexomino(10,27);
+animator.createLightweightSpaceship(12,5);
+animator.createPentaDecathlon(9,10);
+animator.createToad(4,3);
+animator.createCorners();
+animator.createMidpoints();
+animator.createShip(30,20);
 
 
 function toggleRunning(): void {
